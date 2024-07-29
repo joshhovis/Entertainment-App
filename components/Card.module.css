@@ -38,6 +38,11 @@
     gap: 5px;
 }
 
+.cardText p {
+    font-weight: 200;
+    color: rgb(255, 255, 255, 0.75);
+}
+
 .cardInfo {
     display: flex;
     gap: 20px;
@@ -45,7 +50,7 @@
 
 .cardInfo p {
     position: relative;
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 100;
 }
 
@@ -53,11 +58,11 @@
 .cardRating::before {
     content: "";
     position: absolute;
-    background: white;
-    width: 5px;
-    height: 5px;
+    background-color: rgb(255, 255, 255, 0.75);
+    width: 4px;
+    height: 4px;
     left: -13px;
-    top: 50%;
+    top: 51%;
     transform: translateY(-50%);
     border-radius: 50%;
 }
@@ -65,4 +70,5 @@
 .cardTitle {
     width: 100%;
     font-size: 1rem;
+    font-weight: 400;
 }

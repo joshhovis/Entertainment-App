@@ -8,13 +8,11 @@ const CardTrending = ({ item }) => {
     const [isBookmarked, setIsBookmarked] = useState(item.isBookmarked);
 
     return (
-        <div className={styles.card}>
-            <div className={styles.cardImages}>
-                <img
-                    className={styles.cardPreview}
-                    src={item.thumbnail.trending.large}
-                    alt={`${item.title} preview`}
-                />
+        <div
+            className={styles.card}
+            style={{ backgroundImage: `url(${item.thumbnail.trending.large})` }}
+        >
+            <div className={styles.overlay}>
                 <div className={styles.cardBookmarkWrapper}>
                     <Image
                         className={styles.cardBookmark}
@@ -22,14 +20,16 @@ const CardTrending = ({ item }) => {
                         alt="bookmark icon"
                     />
                 </div>
-            </div>
-            <div className={styles.cardText}>
-                <div className={styles.cardInfo}>
-                    <p className={styles.cardYear}>{item.year} </p>
-                    <p className={styles.cardCategory}>{item.category} </p>
-                    <p className={styles.cardRating}>{item.rating} </p>
+                <div className={styles.cardText}>
+                    <div className={styles.cardInfo}>
+                        <p className={styles.cardYear}>{item.year} </p>
+                        <p className={styles.cardCategory}>{item.category} </p>
+                    </div>
+                    <div className={styles.cardRatingWrapper}>
+                        <p className={styles.cardRating}>{item.rating} </p>
+                    </div>
+                    <h3 className={styles.cardTitle}>{item.title}</h3>
                 </div>
-                <h3 className={styles.cardTitle}>{item.title}</h3>
             </div>
         </div>
     );
