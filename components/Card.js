@@ -1,5 +1,9 @@
-import styles from "./Card.module.css";
+// import styles from "./Card.module.css";
 
-const Card = () => <div></div>;
+const Card = ({ item }) => (
+    <div>
+        <h3>{item.title}</h3>
+    </div>
+);
 
 export default Card;
