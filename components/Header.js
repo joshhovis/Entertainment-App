@@ -8,34 +8,34 @@ import moviesIcon from "../public/images/icon-nav-movies.svg";
 import tvSeriesIcon from "../public/images/icon-nav-tv-series.svg";
 import bookmarkIcon from "../public/images/icon-nav-bookmark.svg";
 
-const Header = () => (
+const Header = ({ onLogoClick }) => (
     <header className={styles.header}>
         <nav className={styles.nav}>
             <Image className={styles.logo} src={logo} alt="Logo" />
 
             <div className={styles.icons}>
-                <Link href="/">
+                <Link href="/" onClick={onLogoClick}>
                     <Image
                         className={styles.icon}
                         src={homeIcon}
                         alt="Home Icon"
                     />
                 </Link>
-                <Link href="/movies">
+                <Link href="/movies" onClick={onLogoClick}>
                     <Image
                         className={styles.icon}
                         src={moviesIcon}
                         alt="Movies Icon"
                     />
                 </Link>
-                <Link href="/tv-series">
+                <Link href="/tv-series" onClick={onLogoClick}>
                     <Image
                         className={styles.icon}
                         src={tvSeriesIcon}
                         alt="TV Series Icon"
                     />
                 </Link>
-                <Link href="/bookmarked">
+                <Link href="/bookmarked" onClick={onLogoClick}>
                     <Image
                         className={styles.icon}
                         src={bookmarkIcon}

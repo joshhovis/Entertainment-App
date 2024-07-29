@@ -43,8 +43,11 @@ Your users should be able to:
 
 -   Personalized pages for each movie/show with additional data.
 -   Fetch data from an API instead of hard-coded values.
--   Implement user authentication.
--   Collections for registered users.
+-   Implement user authentication
+    -   Page to edit user info (Change name, email, password, etc)
+        -   CRUD
+    -   Ability to create personal collections
+        -   CRUD
 
 ### Author
 
