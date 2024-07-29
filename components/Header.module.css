@@ -1,0 +1,35 @@
+.header {
+    padding: 16px;
+    background-color: #161d2f;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.icons a {
+    display: flex;
+}
+
+.icon {
+    width: 20px;
+    height: auto;
+}
+
+.user {
+    width: 28px;
+    height: auto;
+    border: 1px solid white;
+    border-radius: 50%;
+}
