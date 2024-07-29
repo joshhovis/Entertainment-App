@@ -1,10 +1,10 @@
-import styles from "./Card.module.css";
+import styles from "./CardTrending.module.css";
 import bookmarkEmpty from "../public/images/icon-bookmark-empty.svg";
 import bookmarkFull from "../public/images/icon-bookmark-full.svg";
 import Image from "next/image";
 import { useState } from "react";
 
-const Card = ({ item }) => {
+const CardTrending = ({ item }) => {
     const [isBookmarked, setIsBookmarked] = useState(item.isBookmarked);
 
     return (
@@ -12,7 +12,7 @@ const Card = ({ item }) => {
             <div className={styles.cardImages}>
                 <img
                     className={styles.cardPreview}
-                    src={item.thumbnail.regular.small}
+                    src={item.thumbnail.trending.large}
                     alt={`${item.title} preview`}
                 />
                 <div className={styles.cardBookmarkWrapper}>
@@ -35,4 +35,4 @@ const Card = ({ item }) => {
     );
 };
 
-export default Card;
+export default CardTrending;

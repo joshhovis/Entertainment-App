@@ -1,8 +1,6 @@
 .card {
-    width: calc(50% - 15px);
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
     gap: 10px;
 }
 
