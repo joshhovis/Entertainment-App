@@ -1,0 +1,68 @@
+.card {
+    width: calc(50% - 15px);
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    gap: 10px;
+}
+
+.cardImages {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.cardPreview {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.cardBookmarkWrapper {
+    display: flex;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: rgba(16, 20, 30, 0.4);
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.cardBookmark {
+    width: 16px;
+    height: auto;
+}
+
+.cardText {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.cardSubtext {
+    display: flex;
+    gap: 20px;
+}
+
+.cardSubtext p {
+    position: relative;
+    font-size: 13px;
+    font-weight: 100;
+}
+
+.cardCategory::before,
+.cardRating::before {
+    content: "";
+    position: absolute;
+    background: white;
+    width: 5px;
+    height: 5px;
+    left: -13px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+}
+
+.cardTitle {
+    width: 100%;
+    font-size: 1rem;
+}

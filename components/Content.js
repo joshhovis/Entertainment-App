@@ -25,7 +25,7 @@ const Content = ({ type }) => {
     }, [type]);
 
     return (
-        <div>
+        <div className={styles.cardWrapper}>
             {data.map((item) => (
                 <Card key={item.id} item={item} />
             ))}

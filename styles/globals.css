@@ -1,5 +1,13 @@
-body {
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+body {
+    background-color: #10141e;
+    color: white;
+    font-family: "Outfit", Arial, Helvetica, sans-serif;
 }
