@@ -88,3 +88,9 @@
         font-size: 0.8125rem;
     }
 }
+
+@media only screen and (min-width: 1440px) {
+    .card {
+        width: calc((100% / 4) - 0.9375rem);
+    }
+}

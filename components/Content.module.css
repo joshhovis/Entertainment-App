@@ -58,15 +58,28 @@
 }
 
 @media only screen and (min-width: 768px) {
-    .cardWrapper {
-    }
-
     .cardWrapper h2 {
         font-size: 2rem;
     }
 
     .emblaSlide {
         min-width: 65%;
+        margin-right: 30px;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .bodyWrapper {
+        display: flex;
+        padding: 20px;
+    }
+
+    .cardWrapper {
+        width: 100%;
+    }
+
+    .emblaSlide {
+        min-width: 40%;
         margin-right: 30px;
     }
 }

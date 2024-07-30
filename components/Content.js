@@ -139,7 +139,7 @@ const Content = ({ type }) => {
     );
 
     return (
-        <>
+        <div className={styles.bodyWrapper}>
             <Header onLogoClick={resetSearch} type={type} />
             <div className={styles.cardWrapper}>
                 <SearchBar
@@ -222,7 +222,7 @@ const Content = ({ type }) => {
                     </>
                 )}
             </div>
-        </>
+        </div>
     );
 };
 
