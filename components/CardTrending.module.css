@@ -21,7 +21,7 @@
 
 .cardBookmarkWrapper {
     display: flex;
-    padding: 10px;
+    padding: 8px;
     border-radius: 50%;
     background-color: rgba(16, 20, 30, 0.4);
     position: absolute;
@@ -29,11 +29,31 @@
     top: 10px;
     border: none;
     outline: none;
+    transition: 0.1s ease-in;
+}
+
+.cardBookmarkWrapper:hover {
+    cursor: pointer;
+    background-color: white;
+    transition: 0.1s ease-in;
+}
+
+.cardBookmarkWrapper:hover svg {
+    stroke: black;
+    transition: 0.1s ease-in;
+}
+
+.cardBookmarkWrapper:hover .active {
+    fill: black;
+    transition: 0.1s ease-in;
 }
 
 .cardBookmark {
-    width: 16px;
+    width: 24px;
     height: auto;
+    color: white;
+    stroke: white;
+    transition: 0.1s ease-in;
 }
 
 .cardText {

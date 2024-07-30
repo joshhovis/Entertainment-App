@@ -12,7 +12,7 @@
 }
 
 .searchInput {
-    padding: 0.5rem;
+    padding: 0.5rem 0;
     background: none;
     border: none;
     outline: none;
@@ -23,9 +23,21 @@
     caret-color: #fc4747;
 }
 
+.inputWrap {
+    width: 100%;
+    display: flex;
+    position: relative;
+}
+
+.inputWrap:hover .line {
+    width: 100%;
+    border-bottom: 1px solid #5a698f;
+    position: absolute;
+    bottom: 0;
+}
+
 .searchInput:hover,
 .searchInput:focus {
-    border-bottom: 1px solid #5a698f;
     cursor: pointer;
 }
 

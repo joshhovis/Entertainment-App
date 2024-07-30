@@ -21,13 +21,16 @@ const SearchBar = ({ query, setQuery, type }) => {
     return (
         <div className={styles.searchBar}>
             <Image src={searchIcon} alt="Search icon" />
-            <input
-                className={styles.searchInput}
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder={getPlaceholderText()}
-            />
+            <div className={styles.inputWrap}>
+                <input
+                    className={styles.searchInput}
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder={getPlaceholderText()}
+                />
+                <div className={styles.line}></div>
+            </div>
         </div>
     );
 };
