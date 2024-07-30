@@ -21,6 +21,7 @@ const Content = ({ type }) => {
     const [searchResults, setSearchResults] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [isSearching, setIsSearching] = useState(false);
+    const [bookmarks, setBookmarks] = useState([]);
 
     const fuse = new Fuse(data, {
         keys: ["title"],
@@ -32,6 +33,9 @@ const Content = ({ type }) => {
             const response = await fetch("/data.json");
             const result = await response.json();
 
+            const savedBookmarks =
+                JSON.parse(localStorage.getItem("bookmarks")) || [];
+
             if (type === "home") {
                 const trending = result.filter((item) => item.isTrending);
                 const nonTrending = result.filter((item) => !item.isTrending);
@@ -40,7 +44,9 @@ const Content = ({ type }) => {
                 setData(result);
                 setSearchResults(nonTrending);
             } else if (type === "bookmarked") {
-                const bookmarked = result.filter((item) => item.isBookmarked);
+                const bookmarked = result.filter((item) =>
+                    savedBookmarks.includes(item.title)
+                );
                 setData(bookmarked);
                 setSearchResults(bookmarked);
             } else {
@@ -50,6 +56,8 @@ const Content = ({ type }) => {
                 setData(filtered);
                 setSearchResults(filtered);
             }
+
+            setBookmarks(savedBookmarks);
         };
 
         fetchData();
@@ -69,7 +77,9 @@ const Content = ({ type }) => {
         if (type === "home") {
             setSearchResults(nonTrendingData);
         } else if (type === "bookmarked") {
-            setSearchResults(data.filter((item) => item.isBookmarked));
+            setSearchResults(
+                data.filter((item) => bookmarks.includes(item.title))
+            );
         } else {
             setSearchResults(data.filter((item) => item.category === type));
         }
@@ -79,6 +89,30 @@ const Content = ({ type }) => {
     const resetSearch = () => {
         setSearchQuery("");
         resetSearchResults();
+    };
+
+    const toggleBookmark = (title) => {
+        const updatedBookmarks = bookmarks.includes(title)
+            ? bookmarks.filter((bookmarkTitle) => bookmarkTitle !== title)
+            : [...bookmarks, title];
+
+        setBookmarks(updatedBookmarks);
+        localStorage.setItem("bookmarks", JSON.stringify(updatedBookmarks));
+
+        const updatedData = data.map((item) =>
+            item.title === title
+                ? { ...item, isBookmarked: !item.isBookmarked }
+                : item
+        );
+        setData(updatedData);
+
+        if (type === "bookmarked") {
+            setSearchResults(
+                updatedData.filter((item) =>
+                    updatedBookmarks.includes(item.title)
+                )
+            );
+        }
     };
 
     return (
@@ -96,7 +130,13 @@ const Content = ({ type }) => {
                                         className={styles.emblaSlide}
                                         key={item.title}
                                     >
-                                        <CardTrending item={item} />
+                                        <CardTrending
+                                            item={item}
+                                            toggleBookmark={toggleBookmark}
+                                            isBookmarked={bookmarks.includes(
+                                                item.title
+                                            )}
+                                        />
                                     </div>
                                 ))}
                             </div>
@@ -111,7 +151,12 @@ const Content = ({ type }) => {
                 </h2>
                 <div className={styles.homeList}>
                     {searchResults.map((item) => (
-                        <Card key={item.title} item={item} />
+                        <Card
+                            key={item.title}
+                            item={item}
+                            toggleBookmark={toggleBookmark}
+                            isBookmarked={bookmarks.includes(item.title)}
+                        />
                     ))}
                 </div>
             </div>

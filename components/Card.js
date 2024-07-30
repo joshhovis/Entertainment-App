@@ -2,11 +2,8 @@ import styles from "./Card.module.css";
 import bookmarkEmpty from "../public/images/icon-bookmark-empty.svg";
 import bookmarkFull from "../public/images/icon-bookmark-full.svg";
 import Image from "next/image";
-import { useState } from "react";
 
-const Card = ({ item }) => {
-    const [isBookmarked, setIsBookmarked] = useState(item.isBookmarked);
-
+const Card = ({ item, toggleBookmark, isBookmarked }) => {
     return (
         <div className={styles.card}>
             <div className={styles.cardImages}>
@@ -15,13 +12,16 @@ const Card = ({ item }) => {
                     src={item.thumbnail.regular.small}
                     alt={`${item.title} preview`}
                 />
-                <div className={styles.cardBookmarkWrapper}>
+                <button
+                    className={styles.cardBookmarkWrapper}
+                    onClick={() => toggleBookmark(item.title)}
+                >
                     <Image
                         className={styles.cardBookmark}
                         src={isBookmarked ? bookmarkFull : bookmarkEmpty}
                         alt="bookmark icon"
                     />
-                </div>
+                </button>
             </div>
             <div className={styles.cardText}>
                 <div className={styles.cardInfo}>

@@ -36,11 +36,7 @@ const Header = ({ onLogoClick }) => (
                     />
                 </Link>
                 <Link href="/bookmarked" onClick={onLogoClick}>
-                    <Image
-                        className={styles.icon}
-                        src={bookmarkIcon}
-                        alt="Bookmark Icon"
-                    />
+                    <Image src={bookmarkIcon} alt="Bookmark Icon" />
                 </Link>
             </div>
 

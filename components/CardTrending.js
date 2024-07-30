@@ -2,24 +2,24 @@ import styles from "./CardTrending.module.css";
 import bookmarkEmpty from "../public/images/icon-bookmark-empty.svg";
 import bookmarkFull from "../public/images/icon-bookmark-full.svg";
 import Image from "next/image";
-import { useState } from "react";
 
-const CardTrending = ({ item }) => {
-    const [isBookmarked, setIsBookmarked] = useState(item.isBookmarked);
-
+const CardTrending = ({ item, toggleBookmark, isBookmarked }) => {
     return (
         <div
             className={styles.card}
             style={{ backgroundImage: `url(${item.thumbnail.trending.large})` }}
         >
             <div className={styles.overlay}>
-                <div className={styles.cardBookmarkWrapper}>
+                <button
+                    className={styles.cardBookmarkWrapper}
+                    onClick={() => toggleBookmark(item.title)}
+                >
                     <Image
                         className={styles.cardBookmark}
                         src={isBookmarked ? bookmarkFull : bookmarkEmpty}
                         alt="bookmark icon"
                     />
-                </div>
+                </button>
                 <div className={styles.cardText}>
                     <div className={styles.cardInfo}>
                         <p className={styles.cardYear}>{item.year} </p>
