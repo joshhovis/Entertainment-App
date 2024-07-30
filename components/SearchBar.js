@@ -2,11 +2,7 @@ import styles from "./SearchBar.module.css";
 import searchIcon from "../public/images/icon-search.svg";
 import Image from "next/image";
 
-const SearchBar = ({ query, setQuery, onSearch }) => {
-    const handleSearch = () => {
-        onSearch(query);
-    };
-
+const SearchBar = ({ query, setQuery }) => {
     return (
         <div className={styles.searchBar}>
             <Image src={searchIcon} alt="Search icon" />
@@ -16,7 +12,6 @@ const SearchBar = ({ query, setQuery, onSearch }) => {
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search for movies or TV series"
             />
-            <button onClick={handleSearch}>Search</button>
         </div>
     );
 };

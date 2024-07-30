@@ -7,6 +7,7 @@ import CardTrending from "./CardTrending";
 import useEmblaCarousel from "embla-carousel-react";
 import SearchBar from "./SearchBar";
 import Header from "./Header";
+import Fuse from "fuse.js";
 
 const Content = ({ type }) => {
     const [data, setData] = useState([]);
@@ -20,6 +21,11 @@ const Content = ({ type }) => {
     const [searchResults, setSearchResults] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [isSearching, setIsSearching] = useState(false);
+
+    const fuse = new Fuse(data, {
+        keys: ["title"],
+        threshold: 0.3,
+    });
 
     useEffect(() => {
         const fetchData = async () => {
@@ -49,18 +55,15 @@ const Content = ({ type }) => {
         fetchData();
     }, [type]);
 
-    const handleSearch = (query) => {
-        setSearchQuery(query);
-        setIsSearching(true);
-        if (query === "") {
+    useEffect(() => {
+        if (searchQuery === "") {
             resetSearchResults();
         } else {
-            const filteredResults = data.filter((item) =>
-                item.title.toLowerCase().includes(query.toLowerCase())
-            );
-            setSearchResults(filteredResults);
+            const results = fuse.search(searchQuery).map(({ item }) => item);
+            setSearchResults(results);
+            setIsSearching(true);
         }
-    };
+    }, [searchQuery]);
 
     const resetSearchResults = () => {
         if (type === "home") {
@@ -82,11 +85,7 @@ const Content = ({ type }) => {
         <>
             <Header onLogoClick={resetSearch} />
             <div className={styles.cardWrapper}>
-                <SearchBar
-                    query={searchQuery}
-                    setQuery={setSearchQuery}
-                    onSearch={handleSearch}
-                />
+                <SearchBar query={searchQuery} setQuery={setSearchQuery} />
                 {type === "home" && !isSearching && (
                     <div className={styles.trending}>
                         <h2>Trending</h2>
