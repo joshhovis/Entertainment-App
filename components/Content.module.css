@@ -1,11 +1,29 @@
 .cardWrapper {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 20px;
     padding: 15px;
 }
 
+.bookmarks {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.bookmarksListWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 .homeList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.bookmarkedList {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
