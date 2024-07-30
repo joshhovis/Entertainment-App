@@ -140,7 +140,7 @@ const Content = ({ type }) => {
 
     return (
         <>
-            <Header onLogoClick={resetSearch} />
+            <Header onLogoClick={resetSearch} type={type} />
             <div className={styles.cardWrapper}>
                 <SearchBar
                     query={searchQuery}
