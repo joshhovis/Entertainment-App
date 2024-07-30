@@ -22,6 +22,14 @@
 .icon {
     width: 20px;
     height: auto;
+    color: #5a698f;
+    transition: 0.1s ease-in;
+}
+
+.icon:hover,
+.icon:focus {
+    color: #fc4747;
+    transition: 0.1s ease-in;
 }
 
 .user {
