@@ -94,3 +94,9 @@
         width: calc((100% / 4) - 0.9375rem);
     }
 }
+
+@media only screen and (min-width: 1880px) {
+    .card {
+        width: calc((100% / 5) - 0.9375rem);
+    }
+}

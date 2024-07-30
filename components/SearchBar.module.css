@@ -11,7 +11,7 @@
     height: 24px;
 }
 
-.searchBar input {
+.searchInput {
     padding: 0.5rem;
     background: none;
     border: none;
@@ -20,6 +20,13 @@
     color: white;
     font-weight: 100;
     font-size: 1rem;
+    caret-color: #fc4747;
+}
+
+.searchInput:hover,
+.searchInput:focus {
+    border-bottom: 1px solid #5a698f;
+    cursor: pointer;
 }
 
 .searchBar button {

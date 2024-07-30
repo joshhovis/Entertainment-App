@@ -22,6 +22,7 @@ const SearchBar = ({ query, setQuery, type }) => {
         <div className={styles.searchBar}>
             <Image src={searchIcon} alt="Search icon" />
             <input
+                className={styles.searchInput}
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
