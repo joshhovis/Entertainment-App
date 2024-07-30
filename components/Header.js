@@ -3,10 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "../public/images/logo.svg";
 import profilePic from "../public/images/image-avatar.png";
-import homeIcon from "../public/images/icon-nav-home.svg";
-import moviesIcon from "../public/images/icon-nav-movies.svg";
-import tvSeriesIcon from "../public/images/icon-nav-tv-series.svg";
-import bookmarkIcon from "../public/images/icon-nav-bookmark.svg";
 
 const Header = ({ onLogoClick, type }) => {
     const getIconFilter = (pageType) => {
