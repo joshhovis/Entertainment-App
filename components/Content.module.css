@@ -9,6 +9,7 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
+    width: 100%;
 }
 
 .bookmarksListWrapper {
@@ -54,4 +55,18 @@
     position: relative;
     min-width: 75%;
     margin-right: 15px;
+}
+
+@media only screen and (min-width: 768px) {
+    .cardWrapper {
+    }
+
+    .cardWrapper h2 {
+        font-size: 2rem;
+    }
+
+    .emblaSlide {
+        min-width: 65%;
+        margin-right: 30px;
+    }
 }

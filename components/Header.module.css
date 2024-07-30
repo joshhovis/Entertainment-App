@@ -9,9 +9,6 @@
     align-items: center;
 }
 
-.logo {
-}
-
 .icons {
     display: flex;
     align-items: center;
@@ -32,4 +29,14 @@
     height: auto;
     border: 1px solid white;
     border-radius: 50%;
+}
+
+@media only screen and (min-width: 768px) {
+    .icons {
+        gap: 28px;
+    }
+
+    .icon {
+        width: 22px;
+    }
 }

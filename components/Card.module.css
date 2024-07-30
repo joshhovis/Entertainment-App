@@ -74,3 +74,17 @@
     font-size: 1rem;
     font-weight: 400;
 }
+
+@media only screen and (min-width: 768px) {
+    .card {
+        width: calc((100% / 3) - 0.9375rem);
+    }
+
+    .cardTitle {
+        font-size: 1.125rem;
+    }
+
+    .cardInfo p {
+        font-size: 0.8125rem;
+    }
+}
