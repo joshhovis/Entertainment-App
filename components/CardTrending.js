@@ -1,4 +1,7 @@
 import styles from "./CardTrending.module.css";
+import Image from "next/image";
+import movieIcon from "../public/images/icon-category-movie.svg";
+import tvIcon from "../public/images/icon-category-tv.svg";
 
 const CardTrending = ({ item, toggleBookmark, isBookmarked }) => {
     return (
@@ -58,7 +61,26 @@ const CardTrending = ({ item, toggleBookmark, isBookmarked }) => {
                 <div className={styles.cardText}>
                     <div className={styles.cardInfo}>
                         <p className={styles.cardYear}>{item.year} </p>
-                        <p className={styles.cardCategory}>{item.category} </p>
+                        <div className={styles.cardCategoryWrapper}>
+                            <p className={styles.cardIconWrapper}>
+                                <Image
+                                    className={styles.cardIcon}
+                                    src={
+                                        item.category === "Movie"
+                                            ? movieIcon
+                                            : tvIcon
+                                    }
+                                    alt={
+                                        item.category === "Movie"
+                                            ? "Movie icon"
+                                            : "TV Series icon"
+                                    }
+                                />
+                            </p>
+                            <p className={styles.cardCategory}>
+                                {item.category}{" "}
+                            </p>
+                        </div>
                     </div>
                     <div className={styles.cardRatingWrapper}>
                         <p className={styles.cardRating}>{item.rating} </p>

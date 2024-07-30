@@ -76,8 +76,12 @@
     font-weight: 100;
 }
 
-.cardCategory::before,
-.cardRating::before {
+.cardIconWrapper {
+    display: flex;
+}
+
+.cardRating::before,
+.cardIconWrapper::before {
     content: "";
     position: absolute;
     background-color: rgb(255, 255, 255, 0.75);
@@ -87,6 +91,12 @@
     top: 51%;
     transform: translateY(-50%);
     border-radius: 50%;
+}
+
+.cardCategoryWrapper {
+    display: flex;
+    gap: 8px;
+    align-items: center;
 }
 
 .cardTitle {
