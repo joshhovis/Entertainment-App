@@ -105,7 +105,11 @@ const Content = ({ type }) => {
                     </div>
                 )}
 
-                <h2>Recommended for you</h2>
+                <h2>
+                    {isSearching
+                        ? `Found ${searchResults.length} results for "${searchQuery}"`
+                        : "Recommended for you"}
+                </h2>
                 <div className={styles.homeList}>
                     {searchResults.map((item) => (
                         <Card key={item.title} item={item} />
