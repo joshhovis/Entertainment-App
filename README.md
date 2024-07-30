@@ -1,16 +1,37 @@
-# Frontend Mentor - Entertainment web app
+# Frontend Mentor - Entertainment App solution
 
-## Design preview
+### Status: MVP
 
-![Design preview for the Entertainment web app coding challenge](./public/preview.jpg)
+This is a solution to the [Entertainment app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/entertainment-web-app-J-UhgAW1X/hub).
 
-## Overview
+### Screenshot
 
-This project is a Next.js application for browsing movies and TV series.
+**Mobile version**
 
-### MVP
+<img src="./public/images/screenshot-mobile.png" alt="Entertainment app on a mobile device viewport" width="200"/>
 
-Your users should be able to:
+**Tablet version**
+
+<img src="./public/images/screenshot-tablet.png" alt="Entertainment app on a mobile device viewport" width="350"/>
+
+**Desktop version**
+
+<img src="./public/images/screenshot-desktop.png" alt="Entertainment app on a desktop device viewport" width="550"/>
+
+## My process
+
+### Built with
+
+-   React / NextJS
+-   Figma design files
+-   CSS Modules
+-   Flexbox
+-   Mobile-first workflow
+-   FuseJS library (Fuzzy search)
+
+## MVP
+
+Users should be able to:
 
 -   View the optimal layout for the app depending on their device's screen size
 -   See hover states for all interactive elements on the page
@@ -18,38 +39,17 @@ Your users should be able to:
 -   Add/Remove bookmarks from all movies and TV series
 -   Search for relevant shows on all pages
 
-#### Expected Behaviour
-
--   General
-    -   The navigation menu should be fixed to the left for larger screens.
--   Home
-    -   The trending section should scroll sideways to reveal other trending shows
-    -   Any search input should search through all shows (i.e. all movies and TV series)
--   Movies
-    -   This page should only display shows with the "Movie" category
-    -   Any search input should search through all movies
--   TV Series
-    -   This page should only display shows with the "TV Series" category
-    -   Any search input should search through all TV series
--   Bookmarked Shows
-    -   This page should display all bookmarked shows from both categories
-    -   Any search input should search through all bookmarked shows
-
-#### ETA
-
--   5 days
-
 ### Future Enhancements
 
 -   Personalized pages for each movie/show with additional data.
--   Fetch data from an API instead of hard-coded values.
+-   Fetch data from an API instead of hard-coded values in a JSON.
 -   Implement user authentication
     -   Page to edit user info (Change name, email, password, etc)
         -   CRUD
     -   Ability to create personal collections
         -   CRUD
 
-### Author
+## Author
 
 -   [Portolio](https://www.joshuahovis.com/)
 -   [GitHub](https://github.com/joshhovis)

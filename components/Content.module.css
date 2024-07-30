@@ -79,6 +79,7 @@
     .cardWrapper {
         width: 100%;
         align-content: flex-start;
+        padding: 15px 25px;
     }
 
     .emblaSlide {
