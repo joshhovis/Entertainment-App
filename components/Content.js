@@ -126,6 +126,8 @@ const Content = ({ type }) => {
                 return "Movies";
             case "TV Series":
                 return "TV Series";
+            case "bookmarked":
+                return "Bookmarked Movies";
             default:
                 return "Recommended for you";
         }
@@ -171,10 +173,10 @@ const Content = ({ type }) => {
                     </div>
                 )}
 
+                <h2>{getHeaderText()}</h2>
                 {type === "bookmarked" ? (
                     <div className={styles.bookmarks}>
                         <div className={styles.bookmarksListWrapper}>
-                            <h2>Bookmarked Movies</h2>
                             <div className={styles.bookmarkedList}>
                                 {bookmarkedMovies.map((item) => (
                                     <Card
@@ -189,7 +191,7 @@ const Content = ({ type }) => {
                             </div>
                         </div>
                         <div className={styles.bookmarksListWrapper}>
-                            <h2>Bookmarked TV Series</h2>
+                            {!isSearching && <h2>Bookmarked TV Series</h2>}
                             <div className={styles.bookmarkedList}>
                                 {bookmarkedTVSeries.map((item) => (
                                     <Card
@@ -205,21 +207,16 @@ const Content = ({ type }) => {
                         </div>
                     </div>
                 ) : (
-                    <>
-                        <h2>{getHeaderText()}</h2>
-                        <div className={styles.homeList}>
-                            {searchResults.map((item) => (
-                                <Card
-                                    key={item.title}
-                                    item={item}
-                                    toggleBookmark={toggleBookmark}
-                                    isBookmarked={bookmarks.includes(
-                                        item.title
-                                    )}
-                                />
-                            ))}
-                        </div>
-                    </>
+                    <div className={styles.homeList}>
+                        {searchResults.map((item) => (
+                            <Card
+                                key={item.title}
+                                item={item}
+                                toggleBookmark={toggleBookmark}
+                                isBookmarked={bookmarks.includes(item.title)}
+                            />
+                        ))}
+                    </div>
                 )}
             </div>
         </div>

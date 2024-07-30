@@ -22,6 +22,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
+    width: 100%;
 }
 
 .bookmarkedList {
@@ -33,6 +34,7 @@
 .cardWrapper h2 {
     font-size: 20px;
     font-weight: 200;
+    width: 100%;
 }
 
 .trending {
@@ -76,6 +78,7 @@
 
     .cardWrapper {
         width: 100%;
+        align-content: flex-start;
     }
 
     .emblaSlide {
