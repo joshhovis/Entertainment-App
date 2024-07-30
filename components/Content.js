@@ -142,7 +142,11 @@ const Content = ({ type }) => {
         <>
             <Header onLogoClick={resetSearch} />
             <div className={styles.cardWrapper}>
-                <SearchBar query={searchQuery} setQuery={setSearchQuery} />
+                <SearchBar
+                    query={searchQuery}
+                    setQuery={setSearchQuery}
+                    type={type}
+                />
                 {type === "home" && !isSearching && (
                     <div className={styles.trending}>
                         <h2>Trending</h2>
