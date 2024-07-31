@@ -1,5 +1,6 @@
 import "../styles/globals.css";
-import Footer from "@/components/Footer";
+import Footer from "../components/Footer";
+import ClientWrapper from "../components/ClientWrapper";
 
 export const metadata = {
     title: "Entertainment Web App",
@@ -10,7 +11,7 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <body>
-                {children}
+                <ClientWrapper>{children}</ClientWrapper>
                 <Footer />
             </body>
         </html>
