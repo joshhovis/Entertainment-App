@@ -102,3 +102,13 @@ input {
 .cl-footer {
     display: none;
 }
+
+.cl-internal-lqfubk {
+    display: none;
+}
+
+@media only screen and (min-width: 1024px) {
+    .profileButton {
+        padding: 10px;
+    }
+}

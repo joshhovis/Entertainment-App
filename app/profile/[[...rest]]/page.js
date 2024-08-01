@@ -34,6 +34,11 @@ const ProfilePage = () => {
                 button.addEventListener("click", () => {
                     signOut();
                 });
+
+                const navbar = document.querySelector(".cl-navbar");
+                if (window.innerWidth >= 1024) {
+                    navbar.append(button);
+                }
             }
 
             const cardBody = document.querySelector(".cl-scrollBox");
