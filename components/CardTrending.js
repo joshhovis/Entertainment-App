@@ -2,11 +2,17 @@ import styles from "./CardTrending.module.css";
 import Image from "next/image";
 import movieIcon from "../public/images/icon-category-movie.svg";
 import tvIcon from "../public/images/icon-category-tv.svg";
+import { motion } from "framer-motion";
+import { cardVariants } from "@/animations/variants";
 
 const CardTrending = ({ item, toggleBookmark, isBookmarked }) => {
     return (
-        <div
+        <motion.div
             className={styles.card}
+            initial="hidden"
+            animate="show"
+            exit="exit"
+            variants={cardVariants}
             style={{ backgroundImage: `url(${item.thumbnail.trending.large})` }}
         >
             <div className={styles.overlay}>
@@ -88,7 +94,7 @@ const CardTrending = ({ item, toggleBookmark, isBookmarked }) => {
                     <h3 className={styles.cardTitle}>{item.title}</h3>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
