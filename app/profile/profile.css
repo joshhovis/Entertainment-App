@@ -1,0 +1,104 @@
+* {
+    font-family: "Outfit";
+}
+
+.profileRoot {
+    display: flex;
+    min-height: 100%;
+    min-width: 100%;
+}
+
+.profileBody {
+    flex: 1;
+    min-width: 100%;
+    display: flex;
+}
+
+.cl-rootBox {
+    min-width: 100%;
+}
+
+.cl-cardBox {
+    min-width: 100%;
+    border-radius: unset;
+    min-height: 100%;
+}
+
+.cl-scrollBox {
+    border-radius: unset;
+    position: relative;
+}
+
+input {
+    caret-color: #fc4747;
+}
+
+/* NAV */
+.cl-navbarMobileMenuRow {
+    justify-content: space-between;
+}
+
+.profileButton {
+    margin-right: 10px;
+    padding: 0 0.75rem;
+    background-color: #fc4747;
+    border: none;
+    outline: none;
+    color: white;
+    border-radius: 0.375rem;
+}
+
+/*  */
+
+.cl-button:focus,
+.cl-avatarImageActionsUpload[data-variant="outline"]:focus {
+    box-shadow: rgba(252, 71, 71, 0.15) 0px 0px 0px 4px;
+}
+
+.cl-formButtonPrimary {
+    color: white;
+    background-color: #fc4747;
+    padding: 0 12px;
+}
+
+.cl-formFieldInput[data-variant="default"]:focus-within,
+.cl-formFieldInput:focus {
+    box-shadow: rgba(252, 71, 71, 0.15) 0px 0px 0px 1px,
+        rgba(252, 71, 71, 0.15) 0px 0px 1px 0px,
+        rgba(252, 71, 71, 0.15) 0px 0px 0px 4px;
+}
+
+.cl-navbarButton:focus {
+    box-shadow: none;
+}
+
+.cl-internal-fyqntd,
+.cl-internal-1wcs8ol,
+.cl-internal-xkj3jj {
+    color: #fc4747;
+}
+
+.homeIcon {
+    color: #fc4747;
+    text-decoration: none;
+    font-size: 2rem;
+    text-align: right;
+    padding: 5px 10px;
+    width: 25%;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+.cl-profileSectionHeader__danger {
+    display: none;
+}
+
+.cl-profileSectionItem__danger,
+.cl-button__danger {
+    padding: 0;
+}
+
+.cl-footer {
+    display: none;
+}

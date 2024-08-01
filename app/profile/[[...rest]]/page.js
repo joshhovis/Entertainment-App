@@ -1,0 +1,86 @@
+"use client";
+
+import {
+    UserProfile,
+    RedirectToSignIn,
+    SignedIn,
+    SignedOut,
+    useClerk,
+} from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
+import { useEffect, useRef } from "react";
+import "../profile.css";
+import HomeIcon from "@/public/svgs/homeIcon";
+
+const ProfilePage = () => {
+    const navbarRef = useRef(null);
+    const { signOut } = useClerk();
+
+    // Wait for the DOM to be fully loaded
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const navbarBanner = document.querySelector(
+                ".cl-navbarMobileMenuRow"
+            );
+            if (navbarBanner) {
+                navbarRef.current = navbarBanner;
+                clearInterval(interval);
+
+                const button = document.createElement("button");
+                button.className = "profileButton";
+                button.textContent = "Sign out";
+
+                navbarBanner.append(button);
+                button.addEventListener("click", () => {
+                    signOut();
+                });
+            }
+
+            const cardBody = document.querySelector(".cl-scrollBox");
+            if (cardBody) {
+                const homeIcon = document.createElement("a");
+                homeIcon.className = "homeIcon";
+                homeIcon.textContent = "JMDb";
+                homeIcon.href = "/";
+
+                cardBody.append(homeIcon);
+            }
+        }, 100);
+
+        document.documentElement.classList.add("profileRoot");
+        document.body.classList.add("profileBody");
+        return () => {
+            document.documentElement.classList.remove("profileRoot");
+            document.body.classList.remove("profileBody");
+
+            // Cleanup interval on component unmount
+            clearInterval(interval);
+        };
+    }, []);
+
+    return (
+        <>
+            <SignedIn>
+                <UserProfile
+                    appearance={{
+                        baseTheme: dark,
+                    }}
+                    routing="path"
+                    path="/profile"
+                >
+                    <UserProfile.Link
+                        label="Home"
+                        url="/"
+                        labelIcon={<HomeIcon />}
+                    />
+                    <UserProfile.Page label="security" />
+                </UserProfile>
+            </SignedIn>
+            <SignedOut>
+                <RedirectToSignIn />
+            </SignedOut>
+        </>
+    );
+};
+
+export default ProfilePage;
