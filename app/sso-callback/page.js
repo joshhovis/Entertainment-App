@@ -27,7 +27,7 @@ const SSOCallback = () => {
                     await (signUpContext.setActive || signInContext.setActive)({
                         session: result.createdSessionId,
                     });
-                    router.push("/profile");
+                    router.push("/");
                 }
             } catch (err) {
                 console.error(JSON.stringify(err, null, 2));

@@ -38,7 +38,7 @@ input {
     justify-content: space-between;
 }
 
-.profileButton {
+.signoutButton {
     margin-right: 10px;
     padding: 0 0.75rem;
     background-color: #fc4747;
@@ -46,6 +46,34 @@ input {
     outline: none;
     color: white;
     border-radius: 0.375rem;
+    overflow-x: hidden;
+}
+
+.signoutButton:hover {
+    cursor: pointer;
+    transform: scale(1.04);
+}
+
+.signoutButton::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.4);
+    -webkit-transition: none;
+    -moz-transition: none;
+    transition: none;
+}
+
+.signoutButton:hover::after {
+    width: 120%;
+    background-color: rgba(255, 255, 255, 0);
+
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
 }
 
 /*  */
@@ -78,18 +106,6 @@ input {
     color: #fc4747;
 }
 
-.homeIcon {
-    color: #fc4747;
-    text-decoration: none;
-    font-size: 2rem;
-    text-align: right;
-    padding: 5px 10px;
-    width: 25%;
-    position: fixed;
-    bottom: 0;
-    right: 0;
-}
-
 .cl-profileSectionHeader__danger {
     display: none;
 }
@@ -107,8 +123,26 @@ input {
     display: none;
 }
 
+.homeIcon {
+    color: #fc4747;
+    text-decoration: none;
+    font-size: 2rem;
+    text-align: right;
+    padding: 5px 10px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    transition: 0.2s ease-in;
+}
+
+.homeIcon:hover {
+    transform: scale(1.1);
+    color: white;
+    transition: 0.2s ease-in;
+}
+
 @media only screen and (min-width: 1024px) {
-    .profileButton {
+    .signoutButton {
         padding: 10px;
     }
 }

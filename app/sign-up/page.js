@@ -10,7 +10,7 @@ const SignUpPage = () => {
         const router = useRouter();
 
         useEffect(() => {
-            router.push("/profile");
+            router.push("/");
         }, [router]);
 
         return null;

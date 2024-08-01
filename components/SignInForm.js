@@ -29,7 +29,7 @@ const SignInForm = () => {
 
             if (signInAttempt.status === "complete") {
                 await setActive({ session: signInAttempt.createdSessionId });
-                router.push("/profile");
+                router.push("/");
             } else {
                 console.error(JSON.stringify(signInAttempt, null, 2));
             }
@@ -45,7 +45,7 @@ const SignInForm = () => {
             await signIn.authenticateWithRedirect({
                 strategy,
                 redirectUrl: "/sso-callback",
-                redirectUrlComplete: "/profile",
+                redirectUrlComplete: "/",
             });
         } catch (err) {
             console.error(JSON.stringify(err, null, 2));

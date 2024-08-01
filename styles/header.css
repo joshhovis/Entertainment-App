@@ -1,0 +1,14 @@
+.cl-avatarBox,
+.cl-userButtonAvatarBox {
+    width: 40px;
+    height: 40px;
+}
+
+.cl-userButtonPopoverActionButtonIcon__manageAccount,
+.cl-userButtonPopoverActionButtonIcon__signOut {
+    color: #fc4747;
+}
+
+.cl-userButtonPopoverFooter {
+    display: none;
+}

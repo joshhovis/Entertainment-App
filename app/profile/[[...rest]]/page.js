@@ -27,7 +27,7 @@ const ProfilePage = () => {
                 clearInterval(interval);
 
                 const button = document.createElement("button");
-                button.className = "profileButton";
+                button.className = "signoutButton";
                 button.textContent = "Sign out";
 
                 navbarBanner.append(button);
@@ -73,12 +73,12 @@ const ProfilePage = () => {
                     routing="path"
                     path="/profile"
                 >
+                    <UserProfile.Page label="security" />
                     <UserProfile.Link
                         label="Home"
                         url="/"
                         labelIcon={<HomeIcon />}
                     />
-                    <UserProfile.Page label="security" />
                 </UserProfile>
             </SignedIn>
             <SignedOut>

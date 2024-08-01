@@ -1,8 +1,11 @@
 import styles from "./Header.module.css";
+import "@/styles/header.css";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../public/images/logo.svg";
 import profilePic from "../public/images/image-avatar.png";
+import { UserButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 
 const Header = ({ onLogoClick, type }) => {
     const getIconFilter = (pageType) => {
@@ -79,13 +82,23 @@ const Header = ({ onLogoClick, type }) => {
                     </Link>
                 </div>
 
-                <Link className={styles.userLink} href="/profile">
-                    <Image
-                        className={styles.userImage}
-                        src={profilePic}
-                        alt="User profile"
+                <SignedIn>
+                    <UserButton
+                        appearance={{ baseTheme: dark }}
+                        userProfileMode="navigation"
+                        userProfileUrl="/profile"
+                        className={styles.userButton}
                     />
-                </Link>
+                </SignedIn>
+                <SignedOut>
+                    <Link className={styles.userLink} href="/profile">
+                        <Image
+                            className={styles.userImage}
+                            src={profilePic}
+                            alt="User profile"
+                        />
+                    </Link>
+                </SignedOut>
             </nav>
         </header>
     );
