@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useSignUp } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const SignUpForm = () => {
     const { isLoaded, signUp, setActive } = useSignUp();
@@ -34,6 +35,20 @@ const SignUpForm = () => {
             } else {
                 console.error(JSON.stringify(signUpAttempt, null, 2));
             }
+        } catch (err) {
+            console.error(JSON.stringify(err, null, 2));
+        }
+    };
+
+    const signInWith = async (strategy) => {
+        if (!isLoaded) return;
+
+        try {
+            await signUp.authenticateWithRedirect({
+                strategy,
+                redirectUrl: "/sso-callback",
+                redirectUrlComplete: "/profile",
+            });
         } catch (err) {
             console.error(JSON.stringify(err, null, 2));
         }
@@ -97,6 +112,21 @@ const SignUpForm = () => {
                     />
                 </div>
                 <button type="submit">Sign up</button>
+                <button
+                    type="button"
+                    onClick={() => signInWith("oauth_google")}
+                >
+                    Sign up with Google
+                </button>
+                <button
+                    type="button"
+                    onClick={() => signInWith("oauth_github")}
+                >
+                    Sign up with GitHub
+                </button>
+                <p>
+                    Already have an account? <Link href="/sign-in">Login</Link>
+                </p>
             </form>
         </>
     );

@@ -1,0 +1,11 @@
+.login {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid red;
+    align-items: center;
+    height: 100%;
+}
+
+.form {
+    background-color: #161d2f;
+}

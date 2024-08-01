@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useSignIn } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import styles from "./SignInForm.module.css";
+import Link from "next/link";
 
 const SignInForm = () => {
     const { isLoaded, signIn, setActive } = useSignIn();
@@ -33,12 +35,26 @@ const SignInForm = () => {
         }
     };
 
+    const signInWith = async (strategy) => {
+        if (!isLoaded) return;
+
+        try {
+            await signIn.authenticateWithRedirect({
+                strategy,
+                redirectUrl: "/sso-callback",
+                redirectUrlComplete: "/profile",
+            });
+        } catch (err) {
+            console.error(JSON.stringify(err, null, 2));
+        }
+    };
+
     return (
-        <>
-            <h1>Sign in</h1>
-            <form onSubmit={handleSubmit}>
+        <div className={styles.login}>
+            <h1 className={styles.loginHeader}>JMDb</h1>
+            <form className={styles.form} onSubmit={handleSubmit}>
+                <h2 className={styles.formHeader}>Login</h2>
                 <div>
-                    <label htmlFor="identifier">Enter email or username</label>
                     <input
                         onChange={(e) => setIdentifier(e.target.value)}
                         id="identifier"
@@ -46,10 +62,10 @@ const SignInForm = () => {
                         type="text"
                         value={identifier}
                         required
+                        placeholder="Email address or username"
                     />
                 </div>
                 <div>
-                    <label htmlFor="password">Enter password</label>
                     <input
                         onChange={(e) => setPassword(e.target.value)}
                         id="password"
@@ -57,11 +73,27 @@ const SignInForm = () => {
                         type="password"
                         value={password}
                         required
+                        placeholder="Password"
                     />
                 </div>
                 <button type="submit">Sign in</button>
+                <button
+                    type="button"
+                    onClick={() => signInWith("oauth_google")}
+                >
+                    Sign in with Google
+                </button>
+                <button
+                    type="button"
+                    onClick={() => signInWith("oauth_github")}
+                >
+                    Sign in with GitHub
+                </button>
+                <p>
+                    Don't have an account? <Link href="/sign-up">Sign Up</Link>
+                </p>
             </form>
-        </>
+        </div>
     );
 };
 
