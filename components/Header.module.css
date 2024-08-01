@@ -32,7 +32,11 @@
     transition: 0.1s ease-in;
 }
 
-.user {
+.userLink {
+    display: flex;
+}
+
+.userImage {
     width: 28px;
     height: auto;
     border: 1px solid white;

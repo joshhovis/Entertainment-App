@@ -5,6 +5,9 @@ import { useSignIn } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import styles from "./SignInForm.module.css";
 import Link from "next/link";
+import googleIcon from "../public/images/google.svg";
+import githubIcon from "../public/images/github.svg";
+import Image from "next/image";
 
 const SignInForm = () => {
     const { isLoaded, signIn, setActive } = useSignIn();
@@ -51,11 +54,33 @@ const SignInForm = () => {
 
     return (
         <div className={styles.login}>
-            <h1 className={styles.loginHeader}>JMDb</h1>
+            <h1 className={styles.loginHeader}>
+                <Link href="/">JMDb</Link>
+            </h1>
             <form className={styles.form} onSubmit={handleSubmit}>
                 <h2 className={styles.formHeader}>Login</h2>
+                <div className={styles.socialConnectors}>
+                    <Image
+                        onClick={() => signInWith("oauth_google")}
+                        className={styles.socialConnectorsIcon}
+                        src={googleIcon}
+                        alt="Google icon"
+                    />
+                    <Image
+                        onClick={() => signInWith("oauth_google")}
+                        className={styles.socialConnectorsIcon}
+                        src={githubIcon}
+                        alt="Google icon"
+                    />
+                </div>
+                <div className={styles.separator}>
+                    <div className={styles.separatorLine}></div>
+                    <p className={styles.separatorText}>or</p>
+                    <div className={styles.separatorLine}></div>
+                </div>
                 <div>
                     <input
+                        className={styles.formInput}
                         onChange={(e) => setIdentifier(e.target.value)}
                         id="identifier"
                         name="identifier"
@@ -67,6 +92,7 @@ const SignInForm = () => {
                 </div>
                 <div>
                     <input
+                        className={styles.formInput}
                         onChange={(e) => setPassword(e.target.value)}
                         id="password"
                         name="password"
@@ -76,20 +102,10 @@ const SignInForm = () => {
                         placeholder="Password"
                     />
                 </div>
-                <button type="submit">Sign in</button>
-                <button
-                    type="button"
-                    onClick={() => signInWith("oauth_google")}
-                >
-                    Sign in with Google
+                <button className={styles.formSubmit} type="submit">
+                    Login to your account
                 </button>
-                <button
-                    type="button"
-                    onClick={() => signInWith("oauth_github")}
-                >
-                    Sign in with GitHub
-                </button>
-                <p>
+                <p className={styles.formFooter}>
                     Don't have an account? <Link href="/sign-up">Sign Up</Link>
                 </p>
             </form>

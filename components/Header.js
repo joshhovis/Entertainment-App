@@ -79,11 +79,13 @@ const Header = ({ onLogoClick, type }) => {
                     </Link>
                 </div>
 
-                <Image
-                    className={styles.user}
-                    src={profilePic}
-                    alt="User profile"
-                />
+                <Link className={styles.userLink} href="/profile">
+                    <Image
+                        className={styles.userImage}
+                        src={profilePic}
+                        alt="User profile"
+                    />
+                </Link>
             </nav>
         </header>
     );

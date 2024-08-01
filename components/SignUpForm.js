@@ -3,7 +3,11 @@
 import { useState } from "react";
 import { useSignUp } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import styles from "./SignUpForm.module.css";
 import Link from "next/link";
+import googleIcon from "../public/images/google.svg";
+import githubIcon from "../public/images/github.svg";
+import Image from "next/image";
 
 const SignUpForm = () => {
     const { isLoaded, signUp, setActive } = useSignUp();
@@ -55,80 +59,97 @@ const SignUpForm = () => {
     };
 
     return (
-        <>
-            <h1>Sign up</h1>
-            <form onSubmit={handleSubmit}>
+        <div className={styles.signup}>
+            <h1 className={styles.signupHeader}>
+                <Link href="/">JMDb</Link>
+            </h1>
+            <form className={styles.form} onSubmit={handleSubmit}>
+                <h2 className={styles.formHeader}>Sign Up</h2>
+                <div className={styles.socialConnectors}>
+                    <Image
+                        onClick={() => signInWith("oauth_google")}
+                        className={styles.socialConnectorsIcon}
+                        src={googleIcon}
+                        alt="Google icon"
+                    />
+                    <Image
+                        onClick={() => signInWith("oauth_github")}
+                        className={styles.socialConnectorsIcon}
+                        src={githubIcon}
+                        alt="GitHub icon"
+                    />
+                </div>
+                <div className={styles.separator}>
+                    <div className={styles.separatorLine}></div>
+                    <p className={styles.separatorText}>or</p>
+                    <div className={styles.separatorLine}></div>
+                </div>
                 <div>
-                    <label htmlFor="firstName">First Name (Optional)</label>
                     <input
+                        className={styles.formInput}
                         onChange={(e) => setFirstName(e.target.value)}
                         id="firstName"
                         name="firstName"
                         type="text"
                         value={firstName}
+                        placeholder="First Name (Optional)"
                     />
                 </div>
                 <div>
-                    <label htmlFor="lastName">Last Name (Optional)</label>
                     <input
+                        className={styles.formInput}
                         onChange={(e) => setLastName(e.target.value)}
                         id="lastName"
                         name="lastName"
                         type="text"
                         value={lastName}
+                        placeholder="Last Name (Optional)"
                     />
                 </div>
                 <div>
-                    <label htmlFor="username">Username</label>
                     <input
+                        className={styles.formInput}
                         onChange={(e) => setUsername(e.target.value)}
                         id="username"
                         name="username"
                         type="text"
                         value={username}
                         required
+                        placeholder="Username"
                     />
                 </div>
                 <div>
-                    <label htmlFor="email">Email</label>
                     <input
+                        className={styles.formInput}
                         onChange={(e) => setEmail(e.target.value)}
                         id="email"
                         name="email"
                         type="email"
                         value={email}
                         required
+                        placeholder="Email"
                     />
                 </div>
                 <div>
-                    <label htmlFor="password">Password</label>
                     <input
+                        className={styles.formInput}
                         onChange={(e) => setPassword(e.target.value)}
                         id="password"
                         name="password"
                         type="password"
                         value={password}
                         required
+                        placeholder="Password"
                     />
                 </div>
-                <button type="submit">Sign up</button>
-                <button
-                    type="button"
-                    onClick={() => signInWith("oauth_google")}
-                >
-                    Sign up with Google
+                <button className={styles.formSubmit} type="submit">
+                    Sign Up
                 </button>
-                <button
-                    type="button"
-                    onClick={() => signInWith("oauth_github")}
-                >
-                    Sign up with GitHub
-                </button>
-                <p>
+                <p className={styles.formFooter}>
                     Already have an account? <Link href="/sign-in">Login</Link>
                 </p>
             </form>
-        </>
+        </div>
     );
 };
 

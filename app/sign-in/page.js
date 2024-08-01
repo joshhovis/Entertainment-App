@@ -4,18 +4,29 @@ import { SignedIn, SignedOut } from "@clerk/nextjs";
 import SignInForm from "../../components/SignInForm";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import styles from "../../components/SignInForm.module.css";
 
-function CustomRedirect() {
-    const router = useRouter();
+const SignInPage = () => {
+    const CustomRedirect = () => {
+        const router = useRouter();
+
+        useEffect(() => {
+            router.push("/profile");
+        }, [router]);
+
+        return null;
+    };
 
     useEffect(() => {
-        router.push("/profile");
-    }, [router]);
+        document.documentElement.classList.add(styles.signInRoot);
+        document.body.classList.add(styles.signInBody);
 
-    return null;
-}
+        return () => {
+            document.documentElement.classList.remove(styles.signInRoot);
+            document.body.classList.remove(styles.signInBody);
+        };
+    }, []);
 
-export default function SignInPage() {
     return (
         <>
             <SignedIn>
@@ -26,4 +37,6 @@ export default function SignInPage() {
             </SignedOut>
         </>
     );
-}
+};
+
+export default SignInPage;

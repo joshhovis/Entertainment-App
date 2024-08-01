@@ -5,17 +5,17 @@ import SignUpForm from "../../components/SignUpForm";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-function CustomRedirect() {
-    const router = useRouter();
+const SignUpPage = () => {
+    const CustomRedirect = () => {
+        const router = useRouter();
 
-    useEffect(() => {
-        router.push("/profile");
-    }, [router]);
+        useEffect(() => {
+            router.push("/profile");
+        }, [router]);
 
-    return null;
-}
+        return null;
+    };
 
-export default function SignUpPage() {
     return (
         <>
             <SignedIn>
@@ -26,4 +26,6 @@ export default function SignUpPage() {
             </SignedOut>
         </>
     );
-}
+};
+
+export default SignUpPage;
