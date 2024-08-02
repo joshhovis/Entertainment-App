@@ -10,7 +10,7 @@ import {
 import { dark } from "@clerk/themes";
 import { useEffect, useRef } from "react";
 import "../profile.css";
-import HomeIcon from "@/public/svgs/homeIcon";
+// import HomeIcon from "@/public/svgs/homeIcon";
 
 const ProfilePage = () => {
     const navbarRef = useRef(null);
@@ -74,11 +74,11 @@ const ProfilePage = () => {
                     path="/profile"
                 >
                     <UserProfile.Page label="security" />
-                    <UserProfile.Link
+                    {/* <UserProfile.Link
                         label="Home"
                         url="/"
                         labelIcon={<HomeIcon />}
-                    />
+                    /> */}
                 </UserProfile>
             </SignedIn>
             <SignedOut>

@@ -1,15 +1,18 @@
 .card {
     display: flex;
     flex-direction: column;
+    /* background-size: 200px 250px; */
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     border-radius: 8px;
     position: relative;
-    height: 150px;
+    height: 250px;
 }
 
 .overlay {
-    background: rgba(0, 0, 0, 0.18);
+    background: rgba(0, 0, 0, 0.3);
     border-radius: 8px;
     padding: 10px;
     display: flex;
@@ -136,6 +139,6 @@
 
 @media only screen and (min-width: 1440px) {
     .card {
-        min-height: 230px;
+        min-height: 300px;
     }
 }

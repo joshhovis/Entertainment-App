@@ -8,6 +8,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import SearchBar from "./SearchBar";
 import Header from "./Header";
 import Fuse from "fuse.js";
+import { fetchTrendingData } from "../utils/fetchData";
 
 const Content = ({ type }) => {
     const [data, setData] = useState([]);
@@ -24,40 +25,40 @@ const Content = ({ type }) => {
     const [bookmarks, setBookmarks] = useState([]);
 
     const fuse = new Fuse(data, {
-        keys: ["title"],
+        keys: ["title", "name"],
         threshold: 0.3,
     });
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch("/data.json");
-            const result = await response.json();
+            try {
+                const trending = await fetchTrendingData();
+                const savedBookmarks =
+                    JSON.parse(localStorage.getItem("bookmarks")) || [];
 
-            const savedBookmarks =
-                JSON.parse(localStorage.getItem("bookmarks")) || [];
+                if (type === "home") {
+                    setTrendingData(trending.slice(0, 5));
+                    setNonTrendingData(trending.slice(5, 30));
+                    setData(trending);
+                    setSearchResults(trending.slice(5, 30));
+                } else if (type === "bookmarked") {
+                    const bookmarked = trending.filter((item) =>
+                        savedBookmarks.includes(item.title || item.name)
+                    );
+                    setData(bookmarked);
+                    setSearchResults(bookmarked);
+                } else {
+                    const filtered = trending.filter(
+                        (item) => item.media_type === type.toLowerCase()
+                    );
+                    setData(filtered);
+                    setSearchResults(filtered);
+                }
 
-            if (type === "home") {
-                const trending = result.filter((item) => item.isTrending);
-                const nonTrending = result.filter((item) => !item.isTrending);
-                setTrendingData(trending);
-                setNonTrendingData(nonTrending);
-                setData(result);
-                setSearchResults(nonTrending);
-            } else if (type === "bookmarked") {
-                const bookmarked = result.filter((item) =>
-                    savedBookmarks.includes(item.title)
-                );
-                setData(bookmarked);
-                setSearchResults(bookmarked);
-            } else {
-                const filtered = result.filter(
-                    (item) => item.category === type
-                );
-                setData(filtered);
-                setSearchResults(filtered);
+                setBookmarks(savedBookmarks);
+            } catch (error) {
+                console.error("Error fetching data from API:", error);
             }
-
-            setBookmarks(savedBookmarks);
         };
 
         fetchData();
@@ -78,10 +79,14 @@ const Content = ({ type }) => {
             setSearchResults(nonTrendingData);
         } else if (type === "bookmarked") {
             setSearchResults(
-                data.filter((item) => bookmarks.includes(item.title))
+                data.filter((item) =>
+                    bookmarks.includes(item.title || item.name)
+                )
             );
         } else {
-            setSearchResults(data.filter((item) => item.category === type));
+            setSearchResults(
+                data.filter((item) => item.media_type === type.toLowerCase())
+            );
         }
         setIsSearching(false);
     };
@@ -100,7 +105,7 @@ const Content = ({ type }) => {
         localStorage.setItem("bookmarks", JSON.stringify(updatedBookmarks));
 
         const updatedData = data.map((item) =>
-            item.title === title
+            item.title === title || item.name === title
                 ? { ...item, isBookmarked: !item.isBookmarked }
                 : item
         );
@@ -109,7 +114,7 @@ const Content = ({ type }) => {
         if (type === "bookmarked") {
             setSearchResults(
                 updatedData.filter((item) =>
-                    updatedBookmarks.includes(item.title)
+                    updatedBookmarks.includes(item.title || item.name)
                 )
             );
         }
@@ -122,9 +127,9 @@ const Content = ({ type }) => {
         switch (type) {
             case "home":
                 return "Recommended for you";
-            case "Movie":
+            case "movie":
                 return "Movies";
-            case "TV Series":
+            case "tv":
                 return "TV Series";
             case "bookmarked":
                 return "Bookmarked Movies";
@@ -134,10 +139,10 @@ const Content = ({ type }) => {
     };
 
     const bookmarkedMovies = searchResults.filter(
-        (item) => item.category === "Movie"
+        (item) => item.media_type === "movie"
     );
     const bookmarkedTVSeries = searchResults.filter(
-        (item) => item.category === "TV Series"
+        (item) => item.media_type === "tv"
     );
 
     return (
@@ -157,13 +162,13 @@ const Content = ({ type }) => {
                                 {trendingData.map((item) => (
                                     <div
                                         className={styles.emblaSlide}
-                                        key={item.title}
+                                        key={item.id}
                                     >
                                         <CardTrending
                                             item={item}
                                             toggleBookmark={toggleBookmark}
                                             isBookmarked={bookmarks.includes(
-                                                item.title
+                                                item.title || item.name
                                             )}
                                         />
                                     </div>
@@ -180,11 +185,11 @@ const Content = ({ type }) => {
                             <div className={styles.bookmarkedList}>
                                 {bookmarkedMovies.map((item) => (
                                     <Card
-                                        key={item.title}
+                                        key={item.id}
                                         item={item}
                                         toggleBookmark={toggleBookmark}
                                         isBookmarked={bookmarks.includes(
-                                            item.title
+                                            item.title || item.name
                                         )}
                                     />
                                 ))}
@@ -195,11 +200,11 @@ const Content = ({ type }) => {
                             <div className={styles.bookmarkedList}>
                                 {bookmarkedTVSeries.map((item) => (
                                     <Card
-                                        key={item.title}
+                                        key={item.id}
                                         item={item}
                                         toggleBookmark={toggleBookmark}
                                         isBookmarked={bookmarks.includes(
-                                            item.title
+                                            item.title || item.name
                                         )}
                                     />
                                 ))}
@@ -210,10 +215,12 @@ const Content = ({ type }) => {
                     <div className={styles.homeList}>
                         {searchResults.map((item) => (
                             <Card
-                                key={item.title}
+                                key={item.id}
                                 item={item}
                                 toggleBookmark={toggleBookmark}
-                                isBookmarked={bookmarks.includes(item.title)}
+                                isBookmarked={bookmarks.includes(
+                                    item.title || item.name
+                                )}
                             />
                         ))}
                     </div>

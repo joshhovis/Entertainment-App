@@ -1,5 +1,5 @@
 import Content from "@/components/Content";
 
 export default function TVSeries() {
-    return <Content type="TV Series" />;
+    return <Content type="tv" />;
 }
