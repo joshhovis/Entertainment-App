@@ -6,6 +6,8 @@ import { motion } from "framer-motion";
 import { cardVariants } from "@/animations/variants";
 
 const CardTrending = ({ item, toggleBookmark, isBookmarked }) => {
+    let ratingPercent = `${Math.round(item.vote_average * 10)}%`;
+
     return (
         <motion.div
             className={styles.card}
@@ -79,9 +81,7 @@ const CardTrending = ({ item, toggleBookmark, isBookmarked }) => {
                         </div>
                     </div>
                     <div className={styles.cardRatingWrapper}>
-                        <p className={styles.cardRating}>
-                            {item.vote_average}{" "}
-                        </p>
+                        <p className={styles.cardRating}>{ratingPercent} </p>
                     </div>
                     <h3 className={styles.cardTitle}>
                         {item.title || item.name}

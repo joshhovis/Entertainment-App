@@ -8,7 +8,11 @@ import useEmblaCarousel from "embla-carousel-react";
 import SearchBar from "./SearchBar";
 import Header from "./Header";
 import Fuse from "fuse.js";
-import { fetchTrendingData } from "../utils/fetchData";
+import {
+    fetchTrendingData,
+    fetchMoviesData,
+    fetchTVData,
+} from "../utils/fetchData";
 
 const Content = ({ type }) => {
     const [data, setData] = useState([]);
@@ -32,25 +36,31 @@ const Content = ({ type }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const trending = await fetchTrendingData();
+                let fetchedData = [];
+                if (type === "home") {
+                    fetchedData = await fetchTrendingData();
+                } else if (type === "movie") {
+                    fetchedData = await fetchMoviesData();
+                } else if (type === "tv") {
+                    fetchedData = await fetchTVData();
+                }
+
                 const savedBookmarks =
                     JSON.parse(localStorage.getItem("bookmarks")) || [];
 
                 if (type === "home") {
-                    setTrendingData(trending.slice(0, 5));
-                    setNonTrendingData(trending.slice(5, 30));
-                    setData(trending);
-                    setSearchResults(trending.slice(5, 30));
+                    setTrendingData(fetchedData.slice(0, 5));
+                    setNonTrendingData(fetchedData.slice(5, 30));
+                    setData(fetchedData);
+                    setSearchResults(fetchedData.slice(5, 30));
                 } else if (type === "bookmarked") {
-                    const bookmarked = trending.filter((item) =>
+                    const bookmarked = fetchedData.filter((item) =>
                         savedBookmarks.includes(item.title || item.name)
                     );
                     setData(bookmarked);
                     setSearchResults(bookmarked);
                 } else {
-                    const filtered = trending.filter(
-                        (item) => item.media_type === type.toLowerCase()
-                    );
+                    const filtered = fetchedData.slice(0, 30);
                     setData(filtered);
                     setSearchResults(filtered);
                 }
@@ -84,9 +94,7 @@ const Content = ({ type }) => {
                 )
             );
         } else {
-            setSearchResults(
-                data.filter((item) => item.media_type === type.toLowerCase())
-            );
+            setSearchResults(data);
         }
         setIsSearching(false);
     };
@@ -191,6 +199,7 @@ const Content = ({ type }) => {
                                         isBookmarked={bookmarks.includes(
                                             item.title || item.name
                                         )}
+                                        type="movie"
                                     />
                                 ))}
                             </div>
@@ -206,6 +215,7 @@ const Content = ({ type }) => {
                                         isBookmarked={bookmarks.includes(
                                             item.title || item.name
                                         )}
+                                        type="tv"
                                     />
                                 ))}
                             </div>
@@ -221,6 +231,7 @@ const Content = ({ type }) => {
                                 isBookmarked={bookmarks.includes(
                                     item.title || item.name
                                 )}
+                                type={type}
                             />
                         ))}
                     </div>

@@ -40,7 +40,7 @@ const Header = ({ onLogoClick, type }) => {
                     </Link>
                     <Link href="/movies" onClick={onLogoClick}>
                         <svg
-                            style={iconStyles("Movie")}
+                            style={iconStyles("movie")}
                             className={styles.icon}
                             viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +54,7 @@ const Header = ({ onLogoClick, type }) => {
                     </Link>
                     <Link href="/tv-series" onClick={onLogoClick}>
                         <svg
-                            style={iconStyles("TV Series")}
+                            style={iconStyles("tv")}
                             className={styles.icon}
                             viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg"

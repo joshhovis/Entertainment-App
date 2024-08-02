@@ -3,7 +3,16 @@ import Image from "next/image";
 import movieIcon from "../public/images/icon-category-movie.svg";
 import tvIcon from "../public/images/icon-category-tv.svg";
 
-const Card = ({ item, toggleBookmark, isBookmarked }) => {
+const Card = ({ item, toggleBookmark, isBookmarked, type }) => {
+    const year = item.release_date
+        ? item.release_date.split("-")[0]
+        : item.first_air_date
+        ? item.first_air_date.split("-")[0]
+        : "N/A";
+    const category = type === "movie" ? "Movie" : "TV Series";
+    const icon = type === "movie" ? movieIcon : tvIcon;
+    const ratingPercent = `${Math.round(item.vote_average * 10)}%`;
+
     return (
         <div className={styles.card}>
             <div className={styles.cardImages}>
@@ -47,32 +56,18 @@ const Card = ({ item, toggleBookmark, isBookmarked }) => {
             </div>
             <div className={styles.cardText}>
                 <div className={styles.cardInfo}>
-                    <p className={styles.cardYear}>
-                        {item.release_date?.split("-")[0] || "N/A"}{" "}
-                    </p>
+                    <p className={styles.cardYear}>{year}</p>
                     <div className={styles.cardCategoryWrapper}>
                         <p className={styles.cardIconWrapper}>
                             <Image
                                 className={styles.cardIcon}
-                                src={
-                                    item.media_type === "movie"
-                                        ? movieIcon
-                                        : tvIcon
-                                }
-                                alt={
-                                    item.media_type === "movie"
-                                        ? "Movie icon"
-                                        : "TV Series icon"
-                                }
+                                src={icon}
+                                alt={`${category} icon`}
                             />
                         </p>
-                        <p className={styles.cardCategory}>
-                            {item.media_type === "movie"
-                                ? "Movie"
-                                : "TV Series"}{" "}
-                        </p>
+                        <p className={styles.cardCategory}>{category}</p>
                     </div>
-                    <p className={styles.cardRating}>{item.vote_average} </p>
+                    <p className={styles.cardRating}>{ratingPercent}</p>
                 </div>
                 <h3 className={styles.cardTitle}>{item.title || item.name}</h3>
             </div>
