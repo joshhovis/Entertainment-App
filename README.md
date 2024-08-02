@@ -1,6 +1,6 @@
 # Frontend Mentor - Entertainment App solution
 
-### Status: MVP
+### Status: Prod (updates-in-progress)
 
 This is a solution to the [Entertainment app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/entertainment-web-app-J-UhgAW1X/hub).
 
@@ -28,26 +28,26 @@ This is a solution to the [Entertainment app challenge on Frontend Mentor](https
 -   Flexbox
 -   Mobile-first workflow
 -   FuseJS library (Fuzzy search)
+-   Clerk for authentication (including OAuth for Google and GitHub)
+-   Axios for API data fetching
 
-## MVP
+##
 
-Users should be able to:
+### Users should be able to:
 
 -   View the optimal layout for the app depending on their device's screen size
 -   See hover states for all interactive elements on the page
 -   Navigate between Home, Movies, TV Series, and Bookmarked Shows pages
 -   Add/Remove bookmarks from all movies and TV series
 -   Search for relevant shows on all pages
+-   Authenticate using Clerk, with custom auth flow and OAuth support for Google and GitHub
 
 ### Future Enhancements
 
--   Personalized pages for each movie/show with additional data.
--   Fetch data from an API instead of hard-coded values in a JSON.
--   Implement user authentication
-    -   Page to edit user info (Change name, email, password, etc)
-        -   CRUD
-    -   Ability to create personal collections
-        -   CRUD
+-   Collections page for users to create collections and save items to them
+-   Fetch more results from the API and implement pagination
+-   Filter results on the pages by different queries such as genre, release date, etc.
+-   Ability to leave reviews on items that are viewable by anyone
 
 ## Author
 
