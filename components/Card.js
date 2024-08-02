@@ -3,15 +3,13 @@ import Image from "next/image";
 import movieIcon from "../public/images/icon-category-movie.svg";
 import tvIcon from "../public/images/icon-category-tv.svg";
 
-const Card = ({ item, toggleBookmark, isBookmarked, type }) => {
-    const year = item.release_date
-        ? item.release_date.split("-")[0]
-        : item.first_air_date
-        ? item.first_air_date.split("-")[0]
-        : "N/A";
-    const category = type === "movie" ? "Movie" : "TV Series";
-    const icon = type === "movie" ? movieIcon : tvIcon;
+const Card = ({ item, toggleBookmark, isBookmarked }) => {
     const ratingPercent = `${Math.round(item.vote_average * 10)}%`;
+    const category = item.media_type === "movie" ? "Movie" : "TV Series";
+    const year =
+        item.release_date?.split("-")[0] ||
+        item.first_air_date?.split("-")[0] ||
+        "N/A";
 
     return (
         <div className={styles.card}>
@@ -23,7 +21,7 @@ const Card = ({ item, toggleBookmark, isBookmarked, type }) => {
                 />
                 <button
                     className={styles.cardBookmarkWrapper}
-                    onClick={() => toggleBookmark(item.title || item.name)}
+                    onClick={() => toggleBookmark(item.id)}
                 >
                     {isBookmarked ? (
                         <svg
@@ -56,18 +54,22 @@ const Card = ({ item, toggleBookmark, isBookmarked, type }) => {
             </div>
             <div className={styles.cardText}>
                 <div className={styles.cardInfo}>
-                    <p className={styles.cardYear}>{year}</p>
+                    <p className={styles.cardYear}>{year} </p>
                     <div className={styles.cardCategoryWrapper}>
                         <p className={styles.cardIconWrapper}>
                             <Image
                                 className={styles.cardIcon}
-                                src={icon}
-                                alt={`${category} icon`}
+                                src={category === "Movie" ? movieIcon : tvIcon}
+                                alt={
+                                    category === "Movie"
+                                        ? "Movie icon"
+                                        : "TV Series icon"
+                                }
                             />
                         </p>
-                        <p className={styles.cardCategory}>{category}</p>
+                        <p className={styles.cardCategory}>{category} </p>
                     </div>
-                    <p className={styles.cardRating}>{ratingPercent}</p>
+                    <p className={styles.cardRating}>{ratingPercent} </p>
                 </div>
                 <h3 className={styles.cardTitle}>{item.title || item.name}</h3>
             </div>

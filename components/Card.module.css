@@ -111,6 +111,10 @@
         gap: 20px;
     }
 
+    .cardImages {
+        flex: 1;
+    }
+
     .cardTitle {
         font-size: 1.125rem;
     }
@@ -120,17 +124,25 @@
     }
 }
 
+@media only screen and (min-width: 1024px) {
+    .card {
+        width: calc((100% / 4) - 0.9375rem);
+        gap: 20px;
+    }
+
+    .cardImages {
+        flex: 1;
+    }
+}
+
 @media only screen and (min-width: 1440px) {
     .card {
         width: calc((100% / 4) - 0.9375rem);
-
-        height: 480px;
     }
 
     .cardImages {
         width: 90%;
         flex-grow: 100;
-        max-height: 400px;
     }
 }
 
