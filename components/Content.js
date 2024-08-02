@@ -43,7 +43,18 @@ const Content = ({ type }) => {
                         fetchMoviesData(),
                         fetchTVData(),
                     ]);
-                    fetchedData = [...trending, ...movies, ...tvShows];
+
+                    if (
+                        Array.isArray(trending) &&
+                        Array.isArray(movies) &&
+                        Array.isArray(tvShows)
+                    ) {
+                        fetchedData = [...trending, ...movies, ...tvShows];
+                    } else {
+                        console.error(
+                            "Error: One of the fetched data arrays is not an array."
+                        );
+                    }
                 } else if (type === "movie") {
                     fetchedData = await fetchMoviesData();
                 } else if (type === "tv") {
@@ -60,7 +71,7 @@ const Content = ({ type }) => {
                     setSearchResults(fetchedData.slice(5, 30));
                 } else if (type === "bookmarked") {
                     const bookmarked = fetchedData.filter((item) =>
-                        savedBookmarks.includes(item.id)
+                        savedBookmarks.includes(item.title || item.name)
                     );
                     setData(bookmarked);
                     setSearchResults(bookmarked);
@@ -93,10 +104,11 @@ const Content = ({ type }) => {
         if (type === "home") {
             setSearchResults(nonTrendingData);
         } else if (type === "bookmarked") {
-            const bookmarkedResults = data.filter((item) =>
-                bookmarks.includes(item.id)
+            setSearchResults(
+                data.filter((item) =>
+                    bookmarks.includes(item.title || item.name)
+                )
             );
-            setSearchResults(bookmarkedResults);
         } else {
             setSearchResults(data);
         }
@@ -108,26 +120,27 @@ const Content = ({ type }) => {
         resetSearchResults();
     };
 
-    const toggleBookmark = (id) => {
-        const updatedBookmarks = bookmarks.includes(id)
-            ? bookmarks.filter((bookmarkId) => bookmarkId !== id)
-            : [...bookmarks, id];
+    const toggleBookmark = (title) => {
+        const updatedBookmarks = bookmarks.includes(title)
+            ? bookmarks.filter((bookmarkTitle) => bookmarkTitle !== title)
+            : [...bookmarks, title];
 
         setBookmarks(updatedBookmarks);
         localStorage.setItem("bookmarks", JSON.stringify(updatedBookmarks));
 
         const updatedData = data.map((item) =>
-            item.id === id
+            item.title === title || item.name === title
                 ? { ...item, isBookmarked: !item.isBookmarked }
                 : item
         );
         setData(updatedData);
 
         if (type === "bookmarked") {
-            const updatedSearchResults = updatedData.filter((item) =>
-                updatedBookmarks.includes(item.id)
+            setSearchResults(
+                updatedData.filter((item) =>
+                    updatedBookmarks.includes(item.title || item.name)
+                )
             );
-            setSearchResults(updatedSearchResults);
         }
     };
 
@@ -170,16 +183,16 @@ const Content = ({ type }) => {
                         <h2>Trending</h2>
                         <div className={styles.embla} ref={emblaRef}>
                             <div className={styles.emblaContainer}>
-                                {trendingData.map((item, index) => (
+                                {trendingData.map((item) => (
                                     <div
                                         className={styles.emblaSlide}
-                                        key={`${item.id}-${index}`}
+                                        key={item.id}
                                     >
                                         <CardTrending
                                             item={item}
                                             toggleBookmark={toggleBookmark}
                                             isBookmarked={bookmarks.includes(
-                                                item.id
+                                                item.title || item.name
                                             )}
                                         />
                                     </div>
@@ -194,13 +207,13 @@ const Content = ({ type }) => {
                     <div className={styles.bookmarks}>
                         <div className={styles.bookmarksListWrapper}>
                             <div className={styles.bookmarkedList}>
-                                {bookmarkedMovies.map((item, index) => (
+                                {bookmarkedMovies.map((item) => (
                                     <Card
-                                        key={`${item.id}-${index}`}
+                                        key={item.id}
                                         item={item}
                                         toggleBookmark={toggleBookmark}
                                         isBookmarked={bookmarks.includes(
-                                            item.id
+                                            item.title || item.name
                                         )}
                                     />
                                 ))}
@@ -209,13 +222,13 @@ const Content = ({ type }) => {
                         <div className={styles.bookmarksListWrapper}>
                             {!isSearching && <h2>Bookmarked TV Series</h2>}
                             <div className={styles.bookmarkedList}>
-                                {bookmarkedTVSeries.map((item, index) => (
+                                {bookmarkedTVSeries.map((item) => (
                                     <Card
-                                        key={`${item.id}-${index}`}
+                                        key={item.id}
                                         item={item}
                                         toggleBookmark={toggleBookmark}
                                         isBookmarked={bookmarks.includes(
-                                            item.id
+                                            item.title || item.name
                                         )}
                                     />
                                 ))}
@@ -224,12 +237,14 @@ const Content = ({ type }) => {
                     </div>
                 ) : (
                     <div className={styles.homeList}>
-                        {searchResults.map((item, index) => (
+                        {searchResults.map((item) => (
                             <Card
-                                key={`${item.id}-${index}`}
+                                key={item.id}
                                 item={item}
                                 toggleBookmark={toggleBookmark}
-                                isBookmarked={bookmarks.includes(item.id)}
+                                isBookmarked={bookmarks.includes(
+                                    item.title || item.name
+                                )}
                             />
                         ))}
                     </div>
