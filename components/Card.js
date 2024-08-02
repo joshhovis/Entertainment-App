@@ -3,9 +3,9 @@ import Image from "next/image";
 import movieIcon from "../public/images/icon-category-movie.svg";
 import tvIcon from "../public/images/icon-category-tv.svg";
 
-const Card = ({ item, toggleBookmark, isBookmarked }) => {
+const Card = ({ item, toggleBookmark, isBookmarked, mediaType }) => {
     const ratingPercent = `${Math.round(item.vote_average * 10)}%`;
-    const category = item.media_type === "movie" ? "Movie" : "TV Series";
+    const category = mediaType === "movie" ? "Movie" : "TV Series";
     const year =
         item.release_date?.split("-")[0] ||
         item.first_air_date?.split("-")[0] ||

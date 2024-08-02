@@ -49,16 +49,35 @@ const Content = ({ type }) => {
                         Array.isArray(movies) &&
                         Array.isArray(tvShows)
                     ) {
-                        fetchedData = [...trending, ...movies, ...tvShows];
+                        fetchedData = [
+                            ...trending.map((item) => ({
+                                ...item,
+                                media_type: item.media_type,
+                            })),
+                            ...movies.map((item) => ({
+                                ...item,
+                                media_type: "movie",
+                            })),
+                            ...tvShows.map((item) => ({
+                                ...item,
+                                media_type: "tv",
+                            })),
+                        ];
                     } else {
                         console.error(
                             "Error: One of the fetched data arrays is not an array."
                         );
                     }
                 } else if (type === "movie") {
-                    fetchedData = await fetchMoviesData();
+                    fetchedData = (await fetchMoviesData()).map((item) => ({
+                        ...item,
+                        media_type: "movie",
+                    }));
                 } else if (type === "tv") {
-                    fetchedData = await fetchTVData();
+                    fetchedData = (await fetchTVData()).map((item) => ({
+                        ...item,
+                        media_type: "tv",
+                    }));
                 }
 
                 const savedBookmarks =
@@ -215,6 +234,7 @@ const Content = ({ type }) => {
                                         isBookmarked={bookmarks.includes(
                                             item.title || item.name
                                         )}
+                                        mediaType="movie"
                                     />
                                 ))}
                             </div>
@@ -230,6 +250,7 @@ const Content = ({ type }) => {
                                         isBookmarked={bookmarks.includes(
                                             item.title || item.name
                                         )}
+                                        mediaType="tv"
                                     />
                                 ))}
                             </div>
@@ -245,6 +266,7 @@ const Content = ({ type }) => {
                                 isBookmarked={bookmarks.includes(
                                     item.title || item.name
                                 )}
+                                mediaType={item.media_type}
                             />
                         ))}
                     </div>
