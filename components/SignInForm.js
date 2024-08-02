@@ -67,10 +67,10 @@ const SignInForm = () => {
                         alt="Google icon"
                     />
                     <Image
-                        onClick={() => signInWith("oauth_google")}
+                        onClick={() => signInWith("oauth_github")}
                         className={styles.socialConnectorsIcon}
                         src={githubIcon}
-                        alt="Google icon"
+                        alt="Github icon"
                     />
                 </div>
                 <div className={styles.separator}>
