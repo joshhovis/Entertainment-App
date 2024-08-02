@@ -1,75 +1,40 @@
 const API_KEY = process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN;
 
-// Fetch trending data
+const options = {
+    method: "GET",
+    headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${API_KEY}`,
+    },
+};
+
+const fetchData = async (url) => {
+    try {
+        const response = await fetch(url, options);
+        const data = await response.json();
+        return data.results;
+    } catch (error) {
+        console.error(`Error fetching data from ${url}:`, error);
+        return [];
+    }
+};
+
 const fetchTrendingData = async () => {
-    const options = {
-        method: "GET",
-        headers: {
-            accept: "application/json",
-            Authorization: `Bearer ${API_KEY}`,
-        },
-    };
-
-    try {
-        const response = await fetch(
-            `https://api.themoviedb.org/3/trending/all/day?language=en-US`,
-            options
-        );
-        const data = await response.json();
-        console.log("Trending data fetched:", data.results);
-        return data.results;
-    } catch (error) {
-        console.error("Error fetching trending data:", error);
-        return [];
-    }
+    return await fetchData(
+        `https://api.themoviedb.org/3/trending/all/day?language=en-US`
+    );
 };
 
-// Fetch movies data
 const fetchMoviesData = async () => {
-    const options = {
-        method: "GET",
-        headers: {
-            accept: "application/json",
-            Authorization: `Bearer ${API_KEY}`,
-        },
-    };
-
-    try {
-        const response = await fetch(
-            `https://api.themoviedb.org/3/discover/movie?language=en-US`,
-            options
-        );
-        const data = await response.json();
-        console.log("Movies data fetched:", data.results);
-        return data.results;
-    } catch (error) {
-        console.error("Error fetching movies data:", error);
-        return [];
-    }
+    return await fetchData(
+        `https://api.themoviedb.org/3/discover/movie?language=en-US`
+    );
 };
 
-// Fetch TV shows data
 const fetchTVData = async () => {
-    const options = {
-        method: "GET",
-        headers: {
-            accept: "application/json",
-            Authorization: `Bearer ${API_KEY}`,
-        },
-    };
-
-    try {
-        const response = await fetch(
-            `https://api.themoviedb.org/3/discover/tv?language=en-US`,
-            options
-        );
-        const data = await response.json();
-        console.log("TV data fetched:", data.results);
-        return data.results;
-    } catch (error) {
-        console.error("Error fetching TV data:", error);
-        return [];
-    }
+    return await fetchData(
+        `https://api.themoviedb.org/3/discover/tv?language=en-US`
+    );
 };
 
 export { fetchTrendingData, fetchMoviesData, fetchTVData };

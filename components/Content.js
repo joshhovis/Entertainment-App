@@ -44,8 +44,6 @@ const Content = ({ type }) => {
                         fetchTVData(),
                     ]);
 
-                    console.log("Fetched data:", { trending, movies, tvShows });
-
                     if (
                         Array.isArray(trending) &&
                         Array.isArray(movies) &&
