@@ -22,7 +22,7 @@ const CardTrending = ({ item, toggleBookmark, isBookmarked }) => {
             <div className={styles.overlay}>
                 <button
                     className={styles.cardBookmarkWrapper}
-                    onClick={() => toggleBookmark(item.title || item.name)}
+                    onClick={() => toggleBookmark(item.id, item.media_type)}
                 >
                     {isBookmarked ? (
                         <svg

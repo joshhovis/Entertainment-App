@@ -21,7 +21,7 @@ const Card = ({ item, toggleBookmark, isBookmarked, mediaType }) => {
                 />
                 <button
                     className={styles.cardBookmarkWrapper}
-                    onClick={() => toggleBookmark(item.id)}
+                    onClick={() => toggleBookmark(item.id, mediaType)}
                 >
                     {isBookmarked ? (
                         <svg

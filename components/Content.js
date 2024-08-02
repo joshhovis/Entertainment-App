@@ -90,10 +90,13 @@ const Content = ({ type }) => {
                     setSearchResults(fetchedData.slice(5, 30));
                 } else if (type === "bookmarked") {
                     const bookmarked = fetchedData.filter((item) =>
-                        savedBookmarks.includes(item.title || item.name)
+                        savedBookmarks.includes(item.id)
                     );
-                    setData(bookmarked);
-                    setSearchResults(bookmarked);
+                    const uniqueBookmarked = Array.from(
+                        new Set(bookmarked.map((item) => item.id))
+                    ).map((id) => bookmarked.find((item) => item.id === id));
+                    setData(uniqueBookmarked);
+                    setSearchResults(uniqueBookmarked);
                 } else {
                     const filtered = fetchedData.slice(0, 30);
                     setData(filtered);
@@ -124,9 +127,7 @@ const Content = ({ type }) => {
             setSearchResults(nonTrendingData);
         } else if (type === "bookmarked") {
             setSearchResults(
-                data.filter((item) =>
-                    bookmarks.includes(item.title || item.name)
-                )
+                data.filter((item) => bookmarks.includes(item.id))
             );
         } else {
             setSearchResults(data);
@@ -139,16 +140,16 @@ const Content = ({ type }) => {
         resetSearchResults();
     };
 
-    const toggleBookmark = (title) => {
-        const updatedBookmarks = bookmarks.includes(title)
-            ? bookmarks.filter((bookmarkTitle) => bookmarkTitle !== title)
-            : [...bookmarks, title];
+    const toggleBookmark = (id, mediaType) => {
+        const updatedBookmarks = bookmarks.includes(id)
+            ? bookmarks.filter((bookmarkId) => bookmarkId !== id)
+            : [...bookmarks, id];
 
         setBookmarks(updatedBookmarks);
         localStorage.setItem("bookmarks", JSON.stringify(updatedBookmarks));
 
         const updatedData = data.map((item) =>
-            item.title === title || item.name === title
+            item.id === id
                 ? { ...item, isBookmarked: !item.isBookmarked }
                 : item
         );
@@ -156,9 +157,7 @@ const Content = ({ type }) => {
 
         if (type === "bookmarked") {
             setSearchResults(
-                updatedData.filter((item) =>
-                    updatedBookmarks.includes(item.title || item.name)
-                )
+                updatedData.filter((item) => updatedBookmarks.includes(item.id))
             );
         }
     };
@@ -211,7 +210,7 @@ const Content = ({ type }) => {
                                             item={item}
                                             toggleBookmark={toggleBookmark}
                                             isBookmarked={bookmarks.includes(
-                                                item.title || item.name
+                                                item.id
                                             )}
                                         />
                                     </div>
@@ -232,7 +231,7 @@ const Content = ({ type }) => {
                                         item={item}
                                         toggleBookmark={toggleBookmark}
                                         isBookmarked={bookmarks.includes(
-                                            item.title || item.name
+                                            item.id
                                         )}
                                         mediaType="movie"
                                     />
@@ -248,7 +247,7 @@ const Content = ({ type }) => {
                                         item={item}
                                         toggleBookmark={toggleBookmark}
                                         isBookmarked={bookmarks.includes(
-                                            item.title || item.name
+                                            item.id
                                         )}
                                         mediaType="tv"
                                     />
@@ -263,9 +262,7 @@ const Content = ({ type }) => {
                                 key={item.id}
                                 item={item}
                                 toggleBookmark={toggleBookmark}
-                                isBookmarked={bookmarks.includes(
-                                    item.title || item.name
-                                )}
+                                isBookmarked={bookmarks.includes(item.id)}
                                 mediaType={item.media_type}
                             />
                         ))}

@@ -114,7 +114,7 @@ const SignUpForm = () => {
             ) : (
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <h2 className={styles.formHeader}>Sign Up</h2>
-                    <div className={styles.socialConnectors}>
+                    {/* <div className={styles.socialConnectors}>
                         <Image
                             onClick={() => signInWith("oauth_google")}
                             className={styles.socialConnectorsIcon}
@@ -132,7 +132,7 @@ const SignUpForm = () => {
                         <div className={styles.separatorLine}></div>
                         <p className={styles.separatorText}>or</p>
                         <div className={styles.separatorLine}></div>
-                    </div>
+                    </div> */}
                     <div>
                         <input
                             className={styles.formInput}
