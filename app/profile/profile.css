@@ -141,6 +141,10 @@ input {
     transition: 0.2s ease-in;
 }
 
+.cl-internal-df7v37 {
+    display: none;
+}
+
 @media only screen and (min-width: 1024px) {
     .signoutButton {
         padding: 10px;

@@ -1,8 +1,3 @@
-// import Content from "@/components/Content";
-
-// export default function Home() {
-//     return <Content type="home" />;
-// }
 "use client";
 import Content from "@/components/Content";
 import { motion } from "framer-motion";

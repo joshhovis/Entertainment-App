@@ -18,6 +18,7 @@ const SignUpForm = () => {
     const [password, setPassword] = useState("");
     const [showVerification, setShowVerification] = useState(false);
     const [verificationCode, setVerificationCode] = useState("");
+    const [isFocused, setIsFocused] = useState(false);
     const router = useRouter();
 
     const handleSubmit = async (e) => {
@@ -69,6 +70,14 @@ const SignUpForm = () => {
         } catch (err) {
             console.error(JSON.stringify(err, null, 2));
         }
+    };
+
+    const handleFocus = () => {
+        setIsFocused(true);
+    };
+
+    const handleBlur = () => {
+        setIsFocused(false);
     };
 
     const signInWith = async (strategy) => {
@@ -183,6 +192,8 @@ const SignUpForm = () => {
                         <input
                             className={styles.formInput}
                             onChange={(e) => setPassword(e.target.value)}
+                            onFocus={handleFocus}
+                            onBlur={handleBlur}
                             id="password"
                             name="password"
                             type="password"
@@ -190,6 +201,11 @@ const SignUpForm = () => {
                             required
                             placeholder="Password"
                         />
+                        {isFocused && password.length < 8 && (
+                            <p className={styles.focusedText}>
+                                Password must be at least 8 characters
+                            </p>
+                        )}
                     </div>
                     <button className={styles.formSubmit} type="submit">
                         Sign Up

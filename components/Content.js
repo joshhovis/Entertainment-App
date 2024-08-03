@@ -84,10 +84,13 @@ const Content = ({ type }) => {
                     JSON.parse(localStorage.getItem("bookmarks")) || [];
 
                 if (type === "home") {
-                    setTrendingData(fetchedData.slice(0, 5));
-                    setNonTrendingData(fetchedData.slice(5, 30));
-                    setData(fetchedData);
-                    setSearchResults(fetchedData.slice(5, 30));
+                    const uniqueFetchedData = Array.from(
+                        new Set(fetchedData.map((item) => item.id))
+                    ).map((id) => fetchedData.find((item) => item.id === id));
+                    setTrendingData(uniqueFetchedData.slice(0, 5));
+                    setNonTrendingData(uniqueFetchedData.slice(5, 30));
+                    setData(uniqueFetchedData);
+                    setSearchResults(uniqueFetchedData.slice(5, 30));
                 } else if (type === "bookmarked") {
                     const bookmarked = fetchedData.filter((item) =>
                         savedBookmarks.includes(item.id)
