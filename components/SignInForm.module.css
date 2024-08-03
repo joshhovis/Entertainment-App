@@ -117,6 +117,12 @@
     border-bottom: 1px solid white;
 }
 
+.passwordError {
+    color: #fc4747;
+    font-size: 0.825rem;
+    padding: 10px;
+}
+
 .formSubmit {
     font-size: 1rem;
     padding: 20px;

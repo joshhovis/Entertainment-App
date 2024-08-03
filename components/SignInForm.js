@@ -13,6 +13,7 @@ const SignInForm = () => {
     const { isLoaded, signIn, setActive } = useSignIn();
     const [identifier, setIdentifier] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
     const router = useRouter();
 
     const handleSubmit = async (e) => {
@@ -35,6 +36,21 @@ const SignInForm = () => {
             }
         } catch (err) {
             console.error(JSON.stringify(err, null, 2));
+            const errorCode = err.errors?.[0]?.code;
+            switch (errorCode) {
+                case "form_password_incorrect":
+                    setError("Password is incorrect. Please try again");
+                    break;
+                case "form_param_format_invalid":
+                    setError("Email format is incorrect. Please try again");
+                    break;
+                case "form_identifier_not_found":
+                    setError("No account found with that email or username");
+                    break;
+                default:
+                    setError("An unexpected error occured. Please try again");
+                    break;
+            }
         }
     };
 
@@ -101,6 +117,7 @@ const SignInForm = () => {
                         required
                         placeholder="Password"
                     />
+                    {error && <p className={styles.passwordError}>{error}</p>}
                 </div>
                 <button className={styles.formSubmit} type="submit">
                     Login to your account

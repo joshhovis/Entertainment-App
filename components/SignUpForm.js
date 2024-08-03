@@ -172,7 +172,6 @@ const SignUpForm = () => {
                             name="username"
                             type="text"
                             value={username}
-                            required
                             placeholder="Username (Optional)"
                         />
                     </div>
