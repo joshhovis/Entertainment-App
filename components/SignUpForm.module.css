@@ -107,15 +107,21 @@
     border-bottom: 1px solid white;
 }
 
+.emailDiv {
+    position: relative;
+}
+
 .focusedText {
     color: #fc4747;
     font-size: 0.825rem;
     padding: 10px;
+    position: absolute;
 }
 
 .formSubmit {
     font-size: 1rem;
     padding: 20px;
+    margin-top: 15px;
     background-color: #fc4747;
     color: white;
     border: none;

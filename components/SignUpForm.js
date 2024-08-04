@@ -213,7 +213,7 @@ const SignUpForm = () => {
                             </p>
                         )}
                     </div>
-                    <div>
+                    <div className={styles.emailDiv}>
                         <input
                             className={styles.formInput}
                             onChange={handleEmailChange}
@@ -241,11 +241,12 @@ const SignUpForm = () => {
                             required
                             placeholder="Password"
                         />
-                        {isFocused && password.length < 8 && (
+                        {(isFocused && password.length < 8) ||
+                        (!isFocused && password.length < 8) ? (
                             <p className={styles.focusedText}>
                                 Password must be at least 8 characters
                             </p>
-                        )}
+                        ) : null}
                     </div>
                     <button className={styles.formSubmit} type="submit">
                         Sign Up
