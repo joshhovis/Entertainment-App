@@ -29,7 +29,7 @@ This is a solution to the [Entertainment app challenge on Frontend Mentor](https
 -   Mobile-first workflow
 -   FuseJS library (Fuzzy search)
 -   Clerk for authentication (including OAuth for Google and GitHub)
--   Axios for API data fetching
+-   Axios for API data fetching: https://www.themoviedb.org/
 
 ##
 
