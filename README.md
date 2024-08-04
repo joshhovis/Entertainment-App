@@ -48,6 +48,7 @@ This is a solution to the [Entertainment app challenge on Frontend Mentor](https
 -   Fetch more results from the API and implement pagination
 -   Filter results on the pages by different queries such as genre, release date, etc.
 -   Ability to leave reviews on items that are viewable by anyone
+-   Add a demo user account with custom permissions so that users can access the site without needing an account
 
 ## Author
 

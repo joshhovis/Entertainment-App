@@ -19,6 +19,7 @@ const SignUpForm = () => {
     const [showVerification, setShowVerification] = useState(false);
     const [verificationCode, setVerificationCode] = useState("");
     const [isFocused, setIsFocused] = useState(false);
+    const [error, setError] = useState("");
     const router = useRouter();
 
     const handleSubmit = async (e) => {
@@ -47,6 +48,28 @@ const SignUpForm = () => {
             }
         } catch (err) {
             console.error(JSON.stringify(err, null, 2));
+            const errorCode = err.errors?.[0]?.meta?.paramName;
+            switch (errorCode) {
+                case "email_address":
+                    setError((prevErrors) => ({
+                        ...prevErrors,
+                        email: "An account with this email already exists",
+                    }));
+                    break;
+                case "username":
+                    setError((prevErrors) => ({
+                        ...prevErrors,
+                        username:
+                            "An account with this username already exists",
+                    }));
+                    break;
+                default:
+                    setError((prevErrors) => ({
+                        ...prevErrors,
+                        email: "An unexpected error occurred. Please try again",
+                    }));
+                    break;
+            }
         }
     };
 
@@ -92,6 +115,16 @@ const SignUpForm = () => {
         } catch (err) {
             console.error(JSON.stringify(err, null, 2));
         }
+    };
+
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
+        setError((prevErrors) => ({ ...prevErrors, email: null }));
+    };
+
+    const handleUsernameChange = (e) => {
+        setUsername(e.target.value);
+        setError((prevErrors) => ({ ...prevErrors, username: null }));
     };
 
     return (
@@ -167,18 +200,23 @@ const SignUpForm = () => {
                     <div>
                         <input
                             className={styles.formInput}
-                            onChange={(e) => setUsername(e.target.value)}
+                            onChange={handleUsernameChange}
                             id="username"
                             name="username"
                             type="text"
                             value={username}
                             placeholder="Username (Optional)"
                         />
+                        {error.username && (
+                            <p className={styles.focusedText}>
+                                {error.username}
+                            </p>
+                        )}
                     </div>
                     <div>
                         <input
                             className={styles.formInput}
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={handleEmailChange}
                             id="email"
                             name="email"
                             type="email"
@@ -186,6 +224,9 @@ const SignUpForm = () => {
                             required
                             placeholder="Email"
                         />
+                        {error.email && (
+                            <p className={styles.focusedText}>{error.email}</p>
+                        )}
                     </div>
                     <div>
                         <input
