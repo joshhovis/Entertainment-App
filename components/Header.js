@@ -88,7 +88,7 @@ const Header = ({ onLogoClick, type }) => {
                         userProfileMode="navigation"
                         userProfileUrl="/profile"
                         className={styles.userButton}
-                    />
+                    ></UserButton>
                 </SignedIn>
                 <SignedOut>
                     <Link className={styles.userLink} href="/profile">

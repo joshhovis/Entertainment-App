@@ -14,6 +14,8 @@
 .cardPreview {
     width: 100%;
     border-radius: 8px;
+    max-height: 265px;
+    min-height: 265px;
 }
 
 .cardBookmarkWrapper {
@@ -111,8 +113,9 @@
         gap: 20px;
     }
 
-    .cardImages {
-        flex: 1;
+    .cardPreview {
+        max-height: 345px;
+        min-height: 345px;
     }
 
     .cardTitle {
@@ -129,15 +132,16 @@
         width: calc((100% / 4) - 0.9375rem);
         gap: 20px;
     }
-
-    .cardImages {
-        flex: 1;
-    }
 }
 
 @media only screen and (min-width: 1440px) {
     .card {
         width: calc((100% / 4) - 0.9375rem);
+    }
+
+    .cardPreview {
+        max-height: unset;
+        min-height: unset;
     }
 
     .cardImages {

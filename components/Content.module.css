@@ -59,6 +59,27 @@
     margin-right: 20px;
 }
 
+.viewMore {
+    margin: 0 auto;
+    font-size: 1rem;
+    padding: 15px 40px;
+    background-color: #fc4747;
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    transition: 0.1s ease-in;
+    font-family: "Outfit", Arial, Helvetica, sans-serif;
+    margin-top: 15px;
+}
+
+.viewMore:hover {
+    background-color: white;
+    color: black;
+    transition: 0.1s ease-in;
+    cursor: pointer;
+}
+
 @media only screen and (min-width: 768px) {
     .cardWrapper h2 {
         font-size: 2rem;

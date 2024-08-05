@@ -27,6 +27,7 @@ const Content = ({ type }) => {
     const [searchQuery, setSearchQuery] = useState("");
     const [isSearching, setIsSearching] = useState(false);
     const [bookmarks, setBookmarks] = useState([]);
+    const [visibleItems, setVisibleItems] = useState(30);
 
     const fuse = new Fuse(data, {
         keys: ["title", "name"],
@@ -37,11 +38,13 @@ const Content = ({ type }) => {
         const fetchData = async () => {
             try {
                 let fetchedData = [];
+                const page = Math.ceil(visibleItems / 25);
+
                 if (type === "home" || type === "bookmarked") {
                     const [trending, movies, tvShows] = await Promise.all([
-                        fetchTrendingData(),
-                        fetchMoviesData(),
-                        fetchTVData(),
+                        fetchTrendingData(page),
+                        fetchMoviesData(page),
+                        fetchTVData(page),
                     ]);
 
                     if (
@@ -69,39 +72,59 @@ const Content = ({ type }) => {
                         );
                     }
                 } else if (type === "movie") {
-                    fetchedData = (await fetchMoviesData()).map((item) => ({
+                    fetchedData = (await fetchMoviesData(page)).map((item) => ({
                         ...item,
                         media_type: "movie",
                     }));
                 } else if (type === "tv") {
-                    fetchedData = (await fetchTVData()).map((item) => ({
+                    fetchedData = (await fetchTVData(page)).map((item) => ({
                         ...item,
                         media_type: "tv",
                     }));
                 }
+
+                fetchedData = fetchedData.filter((item) => item.poster_path);
 
                 const savedBookmarks =
                     JSON.parse(localStorage.getItem("bookmarks")) || [];
 
                 if (type === "home") {
                     const uniqueFetchedData = Array.from(
-                        new Set(fetchedData.map((item) => item.id))
-                    ).map((id) => fetchedData.find((item) => item.id === id));
+                        new Set(
+                            [...data, ...fetchedData].map((item) => item.id)
+                        )
+                    ).map((id) =>
+                        [...data, ...fetchedData].find((item) => item.id === id)
+                    );
                     setTrendingData(uniqueFetchedData.slice(0, 5));
-                    setNonTrendingData(uniqueFetchedData.slice(5, 30));
+                    setNonTrendingData(
+                        uniqueFetchedData.slice(5, visibleItems)
+                    );
                     setData(uniqueFetchedData);
-                    setSearchResults(uniqueFetchedData.slice(5, 30));
+                    setSearchResults(uniqueFetchedData.slice(5, visibleItems));
                 } else if (type === "bookmarked") {
                     const bookmarked = fetchedData.filter((item) =>
                         savedBookmarks.includes(item.id)
                     );
                     const uniqueBookmarked = Array.from(
-                        new Set(bookmarked.map((item) => item.id))
-                    ).map((id) => bookmarked.find((item) => item.id === id));
+                        new Set([...data, ...bookmarked].map((item) => item.id))
+                    ).map((id) =>
+                        [...data, ...bookmarked].find((item) => item.id === id)
+                    );
                     setData(uniqueBookmarked);
                     setSearchResults(uniqueBookmarked);
                 } else {
-                    const filtered = fetchedData.slice(0, 30);
+                    const filtered = Array.from(
+                        new Set(
+                            [...data, ...fetchedData].map((item) => item.id)
+                        )
+                    )
+                        .map((id) =>
+                            [...data, ...fetchedData].find(
+                                (item) => item.id === id
+                            )
+                        )
+                        .slice(0, visibleItems);
                     setData(filtered);
                     setSearchResults(filtered);
                 }
@@ -113,7 +136,7 @@ const Content = ({ type }) => {
         };
 
         fetchData();
-    }, [type]);
+    }, [type, visibleItems]);
 
     useEffect(() => {
         if (searchQuery === "") {
@@ -270,6 +293,16 @@ const Content = ({ type }) => {
                             />
                         ))}
                     </div>
+                )}
+                {type != "bookmarked" && (
+                    <button
+                        onClick={() => {
+                            setVisibleItems(visibleItems + 25);
+                        }}
+                        className={styles.viewMore}
+                    >
+                        View More
+                    </button>
                 )}
             </div>
         </div>

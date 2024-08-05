@@ -8,9 +8,9 @@ const options = {
     },
 };
 
-const fetchData = async (url) => {
+const fetchData = async (url, page = 1) => {
     try {
-        const response = await fetch(url, options);
+        const response = await fetch(`${url}&page=${page}`, options);
         const data = await response.json();
         return data.results;
     } catch (error) {
@@ -19,21 +19,24 @@ const fetchData = async (url) => {
     }
 };
 
-const fetchTrendingData = async () => {
+const fetchTrendingData = async (page) => {
     return await fetchData(
-        `https://api.themoviedb.org/3/trending/all/day?language=en-US`
+        `https://api.themoviedb.org/3/trending/all/day?language=en-US`,
+        page
     );
 };
 
-const fetchMoviesData = async () => {
+const fetchMoviesData = async (page) => {
     return await fetchData(
-        `https://api.themoviedb.org/3/discover/movie?language=en-US`
+        `https://api.themoviedb.org/3/discover/movie?language=en-US`,
+        page
     );
 };
 
-const fetchTVData = async () => {
+const fetchTVData = async (page) => {
     return await fetchData(
-        `https://api.themoviedb.org/3/discover/tv?language=en-US`
+        `https://api.themoviedb.org/3/discover/tv?language=en-US`,
+        page
     );
 };
 
