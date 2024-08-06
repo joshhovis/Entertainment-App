@@ -1,0 +1,68 @@
+.filterSort {
+    position: relative;
+    display: inline-block;
+    width: 80%;
+}
+
+.filterButton {
+    background-color: #fc4747;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 8px;
+    font-family: "Outfit", Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+.filterButton svg {
+    width: 1rem;
+}
+
+.filterButton:focus {
+    outline: none;
+}
+
+.dropdownTitle {
+    color: black;
+    width: 100%;
+}
+
+.dropdownMenu {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    margin-top: 5px;
+    list-style: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    text-align: left;
+}
+
+.dropdownItem {
+    padding: 8px;
+    cursor: pointer;
+    outline: none;
+    text-align: left;
+    font-family: "Outfit", Arial, Helvetica, sans-serif;
+    border-radius: 12px;
+    border: 1px solid black;
+}
+
+.dropdownItem:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdownItem.active {
+    background-color: #fc4747;
+    color: white;
+}

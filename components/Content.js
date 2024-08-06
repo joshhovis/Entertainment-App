@@ -7,6 +7,7 @@ import CardTrending from "./CardTrending";
 import useEmblaCarousel from "embla-carousel-react";
 import SearchBar from "./SearchBar";
 import Header from "./Header";
+import FilterSort from "./FilterSort";
 import Fuse from "fuse.js";
 import {
     fetchTrendingData,
@@ -28,6 +29,8 @@ const Content = ({ type }) => {
     const [isSearching, setIsSearching] = useState(false);
     const [bookmarks, setBookmarks] = useState([]);
     const [visibleItems, setVisibleItems] = useState(30);
+    const [filter, setFilter] = useState([]);
+    const [genres, setGenres] = useState([]);
 
     const fuse = new Fuse(data, {
         keys: ["title", "name"],
@@ -39,8 +42,13 @@ const Content = ({ type }) => {
             try {
                 let fetchedData = [];
                 const page = Math.ceil(visibleItems / 25);
+                const genreFilter = filter.length
+                    ? `&with_genres=${filter
+                          .map((f) => genres.find((g) => g.name === f)?.id)
+                          .join(",")}`
+                    : "";
 
-                if (type === "home" || type === "bookmarked") {
+                if (type === "home") {
                     const [trending, movies, tvShows] = await Promise.all([
                         fetchTrendingData(page),
                         fetchMoviesData(page),
@@ -71,24 +79,11 @@ const Content = ({ type }) => {
                             "Error: One of the fetched data arrays is not an array."
                         );
                     }
-                } else if (type === "movie") {
-                    fetchedData = (await fetchMoviesData(page)).map((item) => ({
-                        ...item,
-                        media_type: "movie",
-                    }));
-                } else if (type === "tv") {
-                    fetchedData = (await fetchTVData(page)).map((item) => ({
-                        ...item,
-                        media_type: "tv",
-                    }));
-                }
 
-                fetchedData = fetchedData.filter((item) => item.poster_path);
+                    fetchedData = fetchedData.filter(
+                        (item) => item.poster_path
+                    );
 
-                const savedBookmarks =
-                    JSON.parse(localStorage.getItem("bookmarks")) || [];
-
-                if (type === "home") {
                     const uniqueFetchedData = Array.from(
                         new Set(
                             [...data, ...fetchedData].map((item) => item.id)
@@ -96,47 +91,118 @@ const Content = ({ type }) => {
                     ).map((id) =>
                         [...data, ...fetchedData].find((item) => item.id === id)
                     );
+
                     setTrendingData(uniqueFetchedData.slice(0, 5));
                     setNonTrendingData(
-                        uniqueFetchedData.slice(5, visibleItems)
+                        uniqueFetchedData.slice(5, visibleItems + 5)
                     );
                     setData(uniqueFetchedData);
-                    setSearchResults(uniqueFetchedData.slice(5, visibleItems));
+                    setSearchResults(
+                        uniqueFetchedData.slice(5, visibleItems + 5)
+                    );
+                } else if (type === "movie") {
+                    const url = `https://api.themoviedb.org/3/discover/movie?language=en-US${genreFilter}&page=${page}`;
+                    const response = await fetch(url, {
+                        headers: {
+                            Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`,
+                            "Content-Type": "application/json;charset=utf-8",
+                        },
+                    });
+                    const movieData = await response.json();
+                    fetchedData = movieData.results.map((item) => ({
+                        ...item,
+                        media_type: "movie",
+                    }));
+
+                    fetchedData = fetchedData.filter(
+                        (item) => item.poster_path
+                    );
+
+                    setData(fetchedData);
+                    setSearchResults(fetchedData);
+                } else if (type === "tv") {
+                    const url = `https://api.themoviedb.org/3/discover/tv?language=en-US${genreFilter}&page=${page}`;
+                    const response = await fetch(url, {
+                        headers: {
+                            Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`,
+                            "Content-Type": "application/json;charset=utf-8",
+                        },
+                    });
+                    const tvData = await response.json();
+                    fetchedData = tvData.results.map((item) => ({
+                        ...item,
+                        media_type: "tv",
+                    }));
+
+                    fetchedData = fetchedData.filter(
+                        (item) => item.poster_path
+                    );
+
+                    setData(fetchedData);
+                    setSearchResults(fetchedData);
                 } else if (type === "bookmarked") {
+                    const [trending, movies, tvShows] = await Promise.all([
+                        fetchTrendingData(page),
+                        fetchMoviesData(page),
+                        fetchTVData(page),
+                    ]);
+
+                    if (
+                        Array.isArray(trending) &&
+                        Array.isArray(movies) &&
+                        Array.isArray(tvShows)
+                    ) {
+                        fetchedData = [
+                            ...trending.map((item) => ({
+                                ...item,
+                                media_type: item.media_type,
+                            })),
+                            ...movies.map((item) => ({
+                                ...item,
+                                media_type: "movie",
+                            })),
+                            ...tvShows.map((item) => ({
+                                ...item,
+                                media_type: "tv",
+                            })),
+                        ];
+                    } else {
+                        console.error(
+                            "Error: One of the fetched data arrays is not an array."
+                        );
+                    }
+
+                    fetchedData = fetchedData.filter(
+                        (item) => item.poster_path
+                    );
+
+                    const savedBookmarks =
+                        JSON.parse(localStorage.getItem("bookmarks")) || [];
+
                     const bookmarked = fetchedData.filter((item) =>
                         savedBookmarks.includes(item.id)
                     );
+
                     const uniqueBookmarked = Array.from(
                         new Set([...data, ...bookmarked].map((item) => item.id))
                     ).map((id) =>
                         [...data, ...bookmarked].find((item) => item.id === id)
                     );
+
                     setData(uniqueBookmarked);
                     setSearchResults(uniqueBookmarked);
-                } else {
-                    const filtered = Array.from(
-                        new Set(
-                            [...data, ...fetchedData].map((item) => item.id)
-                        )
-                    )
-                        .map((id) =>
-                            [...data, ...fetchedData].find(
-                                (item) => item.id === id
-                            )
-                        )
-                        .slice(0, visibleItems);
-                    setData(filtered);
-                    setSearchResults(filtered);
                 }
 
-                setBookmarks(savedBookmarks);
+                setBookmarks(
+                    JSON.parse(localStorage.getItem("bookmarks")) || []
+                );
             } catch (error) {
                 console.error("Error fetching data from API:", error);
             }
         };
 
         fetchData();
-    }, [type, visibleItems]);
+    }, [type, visibleItems, filter, genres]);
 
     useEffect(() => {
         if (searchQuery === "") {
@@ -222,6 +288,13 @@ const Content = ({ type }) => {
                     setQuery={setSearchQuery}
                     type={type}
                 />
+                {(type === "movie" || type === "tv") && (
+                    <FilterSort
+                        onFilterChange={setFilter}
+                        type={type}
+                        onGenresFetch={setGenres}
+                    />
+                )}
                 {type === "home" && !isSearching && (
                     <div className={styles.trending}>
                         <h2>Trending</h2>
@@ -294,16 +367,14 @@ const Content = ({ type }) => {
                         ))}
                     </div>
                 )}
-                {type != "bookmarked" && (
-                    <button
-                        onClick={() => {
-                            setVisibleItems(visibleItems + 25);
-                        }}
-                        className={styles.viewMore}
-                    >
-                        View More
-                    </button>
-                )}
+                <button
+                    onClick={() => {
+                        setVisibleItems(visibleItems + 25);
+                    }}
+                    className={styles.viewMore}
+                >
+                    View More
+                </button>
             </div>
         </div>
     );
