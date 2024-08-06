@@ -73,11 +73,11 @@ const ProfilePage = () => {
                     path="/profile"
                 >
                     <UserProfile.Page label="security" />
-                    <UserProfile.Link
+                    {/* <UserProfile.Link
                         label="Collections"
                         url="/profile/collections"
                         labelIcon={<HomeIcon />}
-                    />
+                    /> */}
                 </UserProfile>
             </SignedIn>
             <SignedOut>

@@ -140,14 +140,13 @@
     }
 
     .cardPreview {
-        max-height: unset;
-        min-height: unset;
+        max-height: 475px;
+        min-height: 475px;
     }
 
     .cardImages {
-        width: 90%;
-        flex: 1;
-        max-height: 410px;
+        /* flex: 1; */
+        /* max-height: 410px; */
     }
 }
 

@@ -42,11 +42,6 @@ const Content = ({ type }) => {
             try {
                 let fetchedData = [];
                 const page = Math.ceil(visibleItems / 25);
-                const genreFilter = filter.length
-                    ? `&with_genres=${filter
-                          .map((f) => genres.find((g) => g.name === f)?.id)
-                          .join(",")}`
-                    : "";
 
                 if (type === "home") {
                     const [trending, movies, tvShows] = await Promise.all([
@@ -101,15 +96,7 @@ const Content = ({ type }) => {
                         uniqueFetchedData.slice(5, visibleItems + 5)
                     );
                 } else if (type === "movie") {
-                    const url = `https://api.themoviedb.org/3/discover/movie?language=en-US${genreFilter}&page=${page}`;
-                    const response = await fetch(url, {
-                        headers: {
-                            Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`,
-                            "Content-Type": "application/json;charset=utf-8",
-                        },
-                    });
-                    const movieData = await response.json();
-                    fetchedData = movieData.results.map((item) => ({
+                    fetchedData = (await fetchMoviesData(page)).map((item) => ({
                         ...item,
                         media_type: "movie",
                     }));
@@ -118,28 +105,44 @@ const Content = ({ type }) => {
                         (item) => item.poster_path
                     );
 
-                    setData(fetchedData);
-                    setSearchResults(fetchedData);
+                    const uniqueFetchedData = Array.from(
+                        new Set(
+                            [...data, ...fetchedData].map((item) => item.id)
+                        )
+                    )
+                        .map((id) =>
+                            [...data, ...fetchedData].find(
+                                (item) => item.id === id
+                            )
+                        )
+                        .slice(0, visibleItems);
+
+                    setData(uniqueFetchedData);
+                    setSearchResults(uniqueFetchedData);
                 } else if (type === "tv") {
-                    const url = `https://api.themoviedb.org/3/discover/tv?language=en-US${genreFilter}&page=${page}`;
-                    const response = await fetch(url, {
-                        headers: {
-                            Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`,
-                            "Content-Type": "application/json;charset=utf-8",
-                        },
-                    });
-                    const tvData = await response.json();
-                    fetchedData = tvData.results.map((item) => ({
+                    fetchedData = (await fetchTVData(page)).map((item) => ({
                         ...item,
                         media_type: "tv",
                     }));
 
                     fetchedData = fetchedData.filter(
-                        (item) => item.poster_path
+                        (item) => item.poster_path || item.backdrop_path
                     );
 
-                    setData(fetchedData);
-                    setSearchResults(fetchedData);
+                    const uniqueFetchedData = Array.from(
+                        new Set(
+                            [...data, ...fetchedData].map((item) => item.id)
+                        )
+                    )
+                        .map((id) =>
+                            [...data, ...fetchedData].find(
+                                (item) => item.id === id
+                            )
+                        )
+                        .slice(0, visibleItems);
+
+                    setData(uniqueFetchedData);
+                    setSearchResults(uniqueFetchedData);
                 } else if (type === "bookmarked") {
                     const [trending, movies, tvShows] = await Promise.all([
                         fetchTrendingData(page),
@@ -202,7 +205,7 @@ const Content = ({ type }) => {
         };
 
         fetchData();
-    }, [type, visibleItems, filter, genres]);
+    }, [type, visibleItems]);
 
     useEffect(() => {
         if (searchQuery === "") {
@@ -213,6 +216,19 @@ const Content = ({ type }) => {
             setIsSearching(true);
         }
     }, [searchQuery]);
+
+    useEffect(() => {
+        if (filter.length === 0) {
+            setSearchResults(data);
+        } else {
+            const filteredResults = data.filter((item) =>
+                filter.every((f) =>
+                    item.genre_ids.includes(genres.find((g) => g.name === f).id)
+                )
+            );
+            setSearchResults(filteredResults);
+        }
+    }, [filter, data, genres]);
 
     const resetSearchResults = () => {
         if (type === "home") {
@@ -279,6 +295,23 @@ const Content = ({ type }) => {
         (item) => item.media_type === "tv"
     );
 
+    const handleViewMore = () => {
+        setVisibleItems((prevVisibleItems) => prevVisibleItems + 25);
+
+        if (isSearching) {
+            const results = fuse.search(searchQuery).map(({ item }) => item);
+            setSearchResults((prevResults) => [
+                ...prevResults,
+                ...results.slice(prevResults.length, prevResults.length + 25),
+            ]);
+        } else {
+            setSearchResults((prevResults) => [
+                ...prevResults,
+                ...data.slice(prevResults.length, prevResults.length + 25),
+            ]);
+        }
+    };
+
     return (
         <div className={styles.bodyWrapper}>
             <Header onLogoClick={resetSearch} type={type} />
@@ -288,13 +321,6 @@ const Content = ({ type }) => {
                     setQuery={setSearchQuery}
                     type={type}
                 />
-                {(type === "movie" || type === "tv") && (
-                    <FilterSort
-                        onFilterChange={setFilter}
-                        type={type}
-                        onGenresFetch={setGenres}
-                    />
-                )}
                 {type === "home" && !isSearching && (
                     <div className={styles.trending}>
                         <h2>Trending</h2>
@@ -319,7 +345,16 @@ const Content = ({ type }) => {
                     </div>
                 )}
 
-                <h2>{getHeaderText()}</h2>
+                <div className={styles.pageTitle}>
+                    {(type === "movie" || type === "tv") && (
+                        <FilterSort
+                            onFilterChange={setFilter}
+                            type={type}
+                            onGenresFetch={setGenres}
+                        />
+                    )}
+                    <h2>{getHeaderText()}</h2>
+                </div>
                 {type === "bookmarked" ? (
                     <div className={styles.bookmarks}>
                         <div className={styles.bookmarksListWrapper}>
@@ -367,12 +402,7 @@ const Content = ({ type }) => {
                         ))}
                     </div>
                 )}
-                <button
-                    onClick={() => {
-                        setVisibleItems(visibleItems + 25);
-                    }}
-                    className={styles.viewMore}
-                >
+                <button onClick={handleViewMore} className={styles.viewMore}>
                     View More
                 </button>
             </div>

@@ -23,6 +23,7 @@
     flex-wrap: wrap;
     gap: 16px;
     width: 100%;
+    justify-content: space-between;
 }
 
 .bookmarkedList {
@@ -59,6 +60,17 @@
     margin-right: 20px;
 }
 
+.pageTitle {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.pageTitle h2 {
+    text-align: right;
+}
+
 .viewMore {
     margin: 0 auto;
     font-size: 1rem;
@@ -89,11 +101,20 @@
         min-width: 65%;
         margin-right: 30px;
     }
+
+    .homeList {
+        justify-content: unset;
+        gap: 22px;
+    }
 }
 
 @media only screen and (min-width: 1024px) {
     .emblaSlide {
         min-width: 50%;
+    }
+
+    .homeList {
+        gap: 20px;
     }
 }
 
@@ -118,5 +139,9 @@
 @media only screen and (min-width: 1880px) {
     .emblaSlide {
         min-width: 30%;
+    }
+
+    .homeList {
+        gap: 18px;
     }
 }

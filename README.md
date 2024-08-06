@@ -41,12 +41,12 @@ This is a solution to the [Entertainment app challenge on Frontend Mentor](https
 -   Add/Remove bookmarks from all movies and TV series
 -   Search for relevant shows on all pages
 -   Authenticate using Clerk, with custom auth flow and OAuth support for Google and GitHub
+-   Filter results on the pages by different queries such as genre, release date, etc.
 
 ### Future Enhancements
 
 -   Collections page for users to create collections and save items to them
--   Fetch more results from the API and implement pagination
--   Filter results on the pages by different queries such as genre, release date, etc.
+-   Individual pages for each item when clicked on, displaying more film specific data
 -   Ability to leave reviews on items that are viewable by anyone
 -   Add a demo user account with custom permissions so that users can access the site without needing an account
 

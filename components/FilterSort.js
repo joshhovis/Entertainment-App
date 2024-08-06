@@ -58,7 +58,7 @@ const FilterSort = ({ onFilterChange, type, onGenresFetch }) => {
                 </svg>
             </button>
             {isOpen && (
-                <ul className={styles.dropdownMenu}>
+                <div className={styles.dropdownMenu}>
                     <p className={styles.dropdownTitle}>Genres</p>
                     {genres.map((genre) => (
                         <button
@@ -73,7 +73,7 @@ const FilterSort = ({ onFilterChange, type, onGenresFetch }) => {
                             {genre.name}
                         </button>
                     ))}
-                </ul>
+                </div>
             )}
         </div>
     );
