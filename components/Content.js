@@ -256,18 +256,20 @@ const Content = ({ type }) => {
         setBookmarks(updatedBookmarks);
         localStorage.setItem("bookmarks", JSON.stringify(updatedBookmarks));
 
-        const updatedData = data.map((item) =>
-            item.id === id
-                ? { ...item, isBookmarked: !item.isBookmarked }
-                : item
-        );
-        setData(updatedData);
-
-        if (type === "bookmarked") {
-            setSearchResults(
-                updatedData.filter((item) => updatedBookmarks.includes(item.id))
+        const updatedData = data
+            .map((item) =>
+                item.id === id
+                    ? { ...item, isBookmarked: !item.isBookmarked }
+                    : item
+            )
+            .filter((item) =>
+                type === "bookmarked"
+                    ? updatedBookmarks.includes(item.id)
+                    : true
             );
-        }
+
+        setData(updatedData);
+        setSearchResults(updatedData);
     };
 
     const getHeaderText = () => {
@@ -442,18 +444,26 @@ const Content = ({ type }) => {
 
                 <div className={styles.pageTitle}>
                     {(type === "movie" || type === "tv") && (
-                        <FilterSort
-                            onFilterChange={setFilter}
-                            type={type}
-                            onGenresFetch={setGenres}
-                        />
+                        <>
+                            <FilterSort
+                                onFilterChange={setFilter}
+                                type={type}
+                                onGenresFetch={setGenres}
+                            />
+                            <h2>{getHeaderText()}</h2>
+                        </>
                     )}
-                    <h2>{getHeaderText()}</h2>
+                    {type === "home" && (
+                        <h2 className={styles.homeTitle}>{getHeaderText()}</h2>
+                    )}
                 </div>
                 {type === "bookmarked" ? (
                     <div className={styles.bookmarks}>
                         <div className={styles.bookmarksListWrapper}>
                             <div className={styles.bookmarkedList}>
+                                <h2 className={styles.homeTitle}>
+                                    {getHeaderText()}
+                                </h2>
                                 {bookmarkedMovies.map((item) => (
                                     <Card
                                         key={item.id}
@@ -497,9 +507,14 @@ const Content = ({ type }) => {
                         ))}
                     </div>
                 )}
-                <button onClick={handleViewMore} className={styles.viewMore}>
-                    View More
-                </button>
+                {type !== "bookmarked" && (
+                    <button
+                        onClick={handleViewMore}
+                        className={styles.viewMore}
+                    >
+                        View More
+                    </button>
+                )}
             </div>
         </div>
     );

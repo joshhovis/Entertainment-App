@@ -71,6 +71,10 @@
     text-align: right;
 }
 
+.homeTitle {
+    text-align: unset !important;
+}
+
 .viewMore {
     margin: 0 auto;
     font-size: 1rem;
