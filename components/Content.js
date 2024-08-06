@@ -91,7 +91,7 @@ const Content = ({ type }) => {
                     setNonTrendingData(
                         uniqueFetchedData.slice(5, visibleItems + 5)
                     );
-                    setData(uniqueFetchedData);
+                    setData(uniqueFetchedData.slice(5, 25));
                     setSearchResults(
                         uniqueFetchedData.slice(5, visibleItems + 5)
                     );
