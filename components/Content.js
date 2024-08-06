@@ -295,20 +295,115 @@ const Content = ({ type }) => {
         (item) => item.media_type === "tv"
     );
 
-    const handleViewMore = () => {
-        setVisibleItems((prevVisibleItems) => prevVisibleItems + 25);
+    const handleViewMore = async () => {
+        try {
+            let fetchedData = [];
+            let page = Math.ceil(visibleItems / 25) + 1;
+            let accumulatedResults = [];
+            let uniqueData = new Set(data.map((item) => item.id));
 
-        if (isSearching) {
-            const results = fuse.search(searchQuery).map(({ item }) => item);
+            while (accumulatedResults.length < 25) {
+                let newFetchedData = [];
+
+                if (type === "home") {
+                    const [trending, movies, tvShows] = await Promise.all([
+                        fetchTrendingData(page),
+                        fetchMoviesData(page),
+                        fetchTVData(page),
+                    ]);
+
+                    newFetchedData = [
+                        ...trending.map((item) => ({
+                            ...item,
+                            media_type: item.media_type,
+                        })),
+                        ...movies.map((item) => ({
+                            ...item,
+                            media_type: "movie",
+                        })),
+                        ...tvShows.map((item) => ({
+                            ...item,
+                            media_type: "tv",
+                        })),
+                    ];
+                } else if (type === "movie") {
+                    newFetchedData = (await fetchMoviesData(page)).map(
+                        (item) => ({
+                            ...item,
+                            media_type: "movie",
+                        })
+                    );
+                } else if (type === "tv") {
+                    newFetchedData = (await fetchTVData(page)).map((item) => ({
+                        ...item,
+                        media_type: "tv",
+                    }));
+                } else if (type === "bookmarked") {
+                    const [trending, movies, tvShows] = await Promise.all([
+                        fetchTrendingData(page),
+                        fetchMoviesData(page),
+                        fetchTVData(page),
+                    ]);
+
+                    newFetchedData = [
+                        ...trending.map((item) => ({
+                            ...item,
+                            media_type: item.media_type,
+                        })),
+                        ...movies.map((item) => ({
+                            ...item,
+                            media_type: "movie",
+                        })),
+                        ...tvShows.map((item) => ({
+                            ...item,
+                            media_type: "tv",
+                        })),
+                    ];
+
+                    const savedBookmarks =
+                        JSON.parse(localStorage.getItem("bookmarks")) || [];
+                    newFetchedData = newFetchedData.filter((item) =>
+                        savedBookmarks.includes(item.id)
+                    );
+                }
+
+                newFetchedData = newFetchedData.filter(
+                    (item) => item.poster_path
+                );
+
+                const newFilteredData =
+                    filter.length === 0
+                        ? newFetchedData
+                        : newFetchedData.filter((item) =>
+                              filter.every((f) =>
+                                  item.genre_ids.includes(
+                                      genres.find((g) => g.name === f).id
+                                  )
+                              )
+                          );
+
+                newFilteredData.forEach((item) => {
+                    if (!uniqueData.has(item.id)) {
+                        uniqueData.add(item.id);
+                        accumulatedResults.push(item);
+                    }
+                });
+
+                if (newFilteredData.length < 25) {
+                    page += 1;
+                } else {
+                    break;
+                }
+            }
+
+            setVisibleItems((prevVisibleItems) => prevVisibleItems + 25);
+            setData((prevData) => [...prevData, ...accumulatedResults]);
             setSearchResults((prevResults) => [
                 ...prevResults,
-                ...results.slice(prevResults.length, prevResults.length + 25),
+                ...accumulatedResults,
             ]);
-        } else {
-            setSearchResults((prevResults) => [
-                ...prevResults,
-                ...data.slice(prevResults.length, prevResults.length + 25),
-            ]);
+        } catch (error) {
+            console.error("Error fetching more data:", error);
         }
     };
 
