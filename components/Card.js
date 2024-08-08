@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./Card.module.css";
 import Image from "next/image";
 import movieIcon from "../public/images/icon-category-movie.svg";
@@ -11,8 +12,11 @@ const Card = ({ item, toggleBookmark, isBookmarked, mediaType }) => {
         item.first_air_date?.split("-")[0] ||
         "N/A";
 
+    const path =
+        mediaType === "movie" ? `/movies/${item.id}` : `/tv-series/${item.id}`;
+
     return (
-        <div className={styles.card}>
+        <Link className={styles.card} href={path} passHref>
             <div className={styles.cardImages}>
                 <img
                     className={styles.cardPreview}
@@ -21,7 +25,10 @@ const Card = ({ item, toggleBookmark, isBookmarked, mediaType }) => {
                 />
                 <button
                     className={styles.cardBookmarkWrapper}
-                    onClick={() => toggleBookmark(item.id, mediaType)}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        toggleBookmark(item.id, mediaType);
+                    }}
                 >
                     {isBookmarked ? (
                         <svg
@@ -73,7 +80,7 @@ const Card = ({ item, toggleBookmark, isBookmarked, mediaType }) => {
                 </div>
                 <h3 className={styles.cardTitle}>{item.title || item.name}</h3>
             </div>
-        </div>
+        </Link>
     );
 };
 
