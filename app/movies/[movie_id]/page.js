@@ -75,15 +75,14 @@ const MovieDetailPage = async ({ params }) => {
     const genres = movie.genres;
 
     return (
-        <>
+        <div className={styles.bodyWrapper}>
             <Header />
             <main className={styles.content}>
                 <div className={styles.poster}>
                     <div
                         className={styles.imageWrapper}
                         style={{
-                            backgroundImage: `url(https://image.tmdb.org/t/p/w500${movie.backdrop_path})`,
-                            backgroundPosition: "",
+                            backgroundImage: `url(https://image.tmdb.org/t/p/w1000_and_h450_multi_faces${movie.backdrop_path})`,
                         }}
                     >
                         <div className={styles.backgroundGradient}></div>
@@ -103,21 +102,23 @@ const MovieDetailPage = async ({ params }) => {
                     {movie.title} <span>({year})</span>
                 </h1>
 
-                <div className={styles.movieInfo}>
-                    <div className={styles.releaseInfo}>
-                        <p className={styles.certification}>
-                            {usCertification}
-                        </p>
-                        <p className={styles.releaseDate}>
-                            {releaseDate}{" "}
-                            <span>({movie.origin_country[0]})</span>
-                        </p>
-                        <p className={styles.runtime}>{runtime}</p>
-                    </div>
-                    <div className={styles.genres}>
-                        {genres.map((genre) => (
-                            <p key={genre.id}>{genre.name}</p>
-                        ))}
+                <div className={styles.movieInfoWrapper}>
+                    <div className={styles.movieInfo}>
+                        <div className={styles.releaseInfo}>
+                            <p className={styles.certification}>
+                                {usCertification}
+                            </p>
+                            <p className={styles.releaseDate}>
+                                {releaseDate}{" "}
+                                <span>({movie.origin_country[0]})</span>
+                            </p>
+                            <p className={styles.runtime}>{runtime}</p>
+                        </div>
+                        <div className={styles.genres}>
+                            {genres.map((genre) => (
+                                <p key={genre.id}>{genre.name}</p>
+                            ))}
+                        </div>
                     </div>
                 </div>
 
@@ -207,7 +208,7 @@ const MovieDetailPage = async ({ params }) => {
                     </Link>
                 </div>
             </main>
-        </>
+        </div>
     );
 };
 
