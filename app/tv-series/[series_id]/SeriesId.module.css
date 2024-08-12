@@ -1,0 +1,241 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-bottom: 50px;
+}
+
+.mainContent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.poster {
+    position: relative;
+    width: 100%;
+    min-width: 100%;
+    height: calc(100vw / 2.222222);
+}
+
+.imageWrapper {
+    width: 100%;
+    min-width: 100%;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: calc((((100vw / 2.222222) - 20px) / 1.5) / 2) 0;
+    height: 100%;
+}
+
+.backgroundGradient {
+    width: 100%;
+    height: 101%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(
+        to right,
+        rgba(16, 20, 30, 1) 20%,
+        rgba(16, 20, 30, 0) 50%
+    );
+}
+
+.posterWrapper {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: calc(((100vw / 2.222222) - 40px) / 1.5);
+    min-width: calc(((100vw / 2.222222) - 40px) / 1.5);
+    height: calc((100vw / 2.222222) - 40px);
+    min-height: calc((100vw / 2.222222) - 40px);
+}
+
+.posterImage {
+    display: block;
+    width: 100%;
+    min-width: 100%;
+    height: 100%;
+    min-height: 100%;
+    border-radius: 8px;
+}
+
+.movieTitle {
+    font-size: 1.375rem;
+    text-align: center;
+}
+
+.movieTitle span {
+    font-size: 0.875rem;
+    font-weight: normal;
+}
+
+.movieInfo {
+    background-color: #080a0f;
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.releaseInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.certification {
+    color: rgb(255, 255, 255, 0.75);
+    padding: 2px 4px;
+    border: 1px solid rgb(255, 255, 255, 0.75);
+    border-radius: 5px;
+}
+
+.releaseDate span {
+    font-size: 0.875rem;
+}
+
+.genres {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.genres p {
+    font-style: italic;
+}
+
+.description {
+    padding: 0 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.descriptionHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.descriptionHeader span {
+    font-style: italic;
+    color: rgb(255, 255, 255, 0.75);
+}
+
+.descriptionHeader p {
+    width: 95%;
+}
+
+.descriptionList {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.descriptionList li {
+    flex: 50%;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.descriptionList li span {
+    font-weight: bold;
+}
+
+.descriptionList li p {
+    font-size: 0.875rem;
+}
+
+.networkImage {
+    width: 50%;
+    height: auto;
+}
+
+@media only screen and (min-width: 1440px) {
+    .bodyWrapper {
+        display: flex;
+        padding: 20px;
+    }
+
+    .poster {
+        height: calc(100vw / 3.5);
+    }
+
+    .backgroundGradient {
+        background-image: linear-gradient(
+            to right,
+            rgba(16, 20, 30, 1) calc((50vw - 170px) - 340px),
+            rgba(16, 20, 30, 0.4) 50%,
+            rgba(16, 20, 30, 0.4) 100%
+        );
+    }
+
+    .imageWrapper {
+        border-radius: 10px;
+        background-position: calc((((100vw / 2.222222) - 20px) / 1.5) / 2) -80px;
+    }
+
+    .posterWrapper {
+        top: 40px;
+        width: calc(((100vw / 4) - 40px) / 1.5);
+        min-width: calc(((100vw / 4) - 40px) / 1.5);
+        height: calc((100vw / 4) - 40px);
+        min-height: calc((100vw / 4) - 40px);
+    }
+
+    .movieTitle {
+        font-size: 2rem;
+    }
+
+    .movieTitle span {
+        font-size: 1.5rem;
+    }
+
+    .movieInfoWrapper {
+        padding: 0 0 0 20px;
+    }
+
+    .movieInfo {
+        border-radius: 10px;
+    }
+
+    .networkImage {
+        width: 25%;
+    }
+}
+
+@media only screen and (min-width: 1880px) {
+    .poster {
+        height: calc(100vw / 4.5);
+        width: 80%;
+        min-width: 80%;
+        margin: 0 auto;
+        border-radius: 10px;
+    }
+
+    .imageWrapper {
+        border-radius: 10px;
+        background-position: calc((((100vw / 2.222222) - 20px) / 1.5) / 2) -40px;
+    }
+
+    .posterWrapper {
+        top: 40px;
+        width: calc(((100vw / 4.8) - 40px) / 1.5);
+        min-width: calc(((100vw / 4.8) - 40px) / 1.5);
+        height: calc((100vw / 4.8) - 40px);
+        min-height: calc((100vw / 4.8) - 40px);
+    }
+
+    .mainContent {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .networkImage {
+        width: 20%;
+    }
+}

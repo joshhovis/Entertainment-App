@@ -1,7 +1,6 @@
 import { fetchMovieData } from "@/utils/fetchData";
 import styles from "./Movie.module.css";
 import Header from "@/components/Header";
-import Link from "next/link";
 import CastCarousel from "@/components/CastCarousel";
 
 export async function generateMetadata({ params }) {
@@ -150,7 +149,7 @@ const MovieDetailPage = async ({ params }) => {
                         </ul>
                     </div>
 
-                    <CastCarousel credits={credits} movieId={params.movie_id} />
+                    <CastCarousel credits={credits} id={params.movie_id} />
                 </div>
             </main>
         </div>

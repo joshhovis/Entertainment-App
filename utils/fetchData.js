@@ -25,7 +25,7 @@ const fetchData = async (url, page = 1) => {
 // Home Page \\
 const fetchTrendingData = async (page) => {
     return await fetchData(
-        `https://api.themoviedb.org/3/trending/all/day?language=en-US`,
+        `https://api.themoviedb.org/3/trending/all/day?language=en-US&with_origin_country=US`,
         page
     );
 };
@@ -33,7 +33,7 @@ const fetchTrendingData = async (page) => {
 // Movies Page \\
 const fetchMoviesData = async (page) => {
     return await fetchData(
-        `https://api.themoviedb.org/3/discover/movie?language=en-US`,
+        `https://api.themoviedb.org/3/discover/movie?language=en-US&with_origin_country=US`,
         page
     );
 };
@@ -41,7 +41,7 @@ const fetchMoviesData = async (page) => {
 // TV Series Page \\
 const fetchTVData = async (page) => {
     return await fetchData(
-        `https://api.themoviedb.org/3/discover/tv?language=en-US`,
+        `https://api.themoviedb.org/3/discover/tv?language=en-US&with_origin_country=US`,
         page
     );
 };
@@ -49,28 +49,17 @@ const fetchTVData = async (page) => {
 // Movie by ID \\
 const fetchMovieData = async (movie_id) => {
     const response = await fetchData(
-        `https://api.themoviedb.org/3/movie/${movie_id}?api_key=4fd920ddd94d4b957054179b45a4aa44&append_to_response=release_dates,credits`
+        `https://api.themoviedb.org/3/movie/${movie_id}?append_to_response=release_dates,credits`
     );
     return response;
 };
 
 // TV by ID \\
 const fetchSeriesIdData = async (series_id) => {
-    return await fetchData(`https://api.themoviedb.org/3/tv/${series_id}`);
-};
-
-const fetchSeriesCredits = async (series_id) => {
     return await fetchData(
-        `https://api.themoviedb.org/3/tv/${series_id}/credits`
+        `https://api.themoviedb.org/3/tv/${series_id}?append_to_response=content_ratings,credits`
     );
 };
-
-const fetchSeriesContentRatings = async (series_id) => {
-    return await fetchData(
-        `https://api.themoviedb.org/3/tv/${series_id}/content_ratings`
-    );
-};
-//
 
 export {
     fetchTrendingData,
@@ -78,6 +67,4 @@ export {
     fetchTVData,
     fetchMovieData,
     fetchSeriesIdData,
-    fetchSeriesCredits,
-    fetchSeriesContentRatings,
 };

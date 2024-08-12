@@ -87,6 +87,8 @@
 .castLink {
     color: white;
     text-decoration: none;
+    width: 10%;
+    transition: 0.1s ease-in;
 }
 
 @media only screen and (min-width: 768px) {
@@ -110,6 +112,29 @@
     .viewMore {
         width: 15%;
         min-width: 15%;
+    }
+
+    .viewMore a {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        transition: 0.1s ease-in;
+        border-radius: 10px;
+    }
+
+    .viewMore a span {
+        display: flex;
+    }
+
+    .viewMore a:hover {
+        transition: 0.1s ease-in;
+        color: black;
+        background-color: white;
+    }
+
+    .castLink:hover {
+        transition: 0.1s ease-in;
+        color: #fc4747;
     }
 }
 

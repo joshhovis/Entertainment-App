@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import styles from "./CastCarousel.module.css";
 import Link from "next/link";
 
-const CastCarousel = ({ credits, movieId }) => {
+const CastCarousel = ({ credits, id }) => {
     useEffect(() => {
         const pointerScroll = (e) => {
             const dragStart = (ev) => e.setPointerCapture(ev.pointerId);
@@ -30,6 +30,7 @@ const CastCarousel = ({ credits, movieId }) => {
                         <li className={styles.castItem} key={actor.cast_id}>
                             {actor.profile_path ? (
                                 <img
+                                    className={styles.actorImage}
                                     src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`}
                                     alt={`${actor.name} headshot`}
                                     draggable="false"
@@ -55,7 +56,7 @@ const CastCarousel = ({ credits, movieId }) => {
                         </li>
                     ))}
                     <li className={styles.viewMore}>
-                        <Link href={`${movieId}/cast`}>
+                        <Link draggable="false" href={`${id}/cast`}>
                             View More{" "}
                             <span className={styles.viewMoreArrow}>
                                 <svg
@@ -73,7 +74,7 @@ const CastCarousel = ({ credits, movieId }) => {
                     </li>
                 </ul>
             </div>
-            <Link className={styles.castLink} href={`${movieId}/cast`}>
+            <Link className={styles.castLink} href={`${id}/cast`}>
                 Full Cast & Crew
             </Link>
         </div>
